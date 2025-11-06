@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CollabSpace - Espace de collaboration étudiante</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <h1 class="logo">Skill<span>Bridge</span></h1>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#features">Fonctionnalités</a></li>
+          <li><a href="#projects">Annonces</a></li>
+          <li><a href="#about">À propos</a></li>
+          <li><button id="loginBtn" class="btn-primary">Connexion</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero section -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="text">
+        <h2>Collabore avec d'autres étudiants pour construire l'avenir</h2>
+        <p>Rejoins la plateforme qui connecte les étudiants selon leurs compétences, centres d’intérêt et projets communs.</p>
+        <div class="hero-actions">
+          <button id="signupBtn" class="btn-primary">Créer un compte</button>
+          <button class="btn-secondary">Découvrir les projets</button>
+        </div>
+      </div>
+      <img src="https://cdn-icons-png.flaticon.com/512/6073/6073873.png" alt="Students collaboration" class="hero-img">
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="features container">
+    <h3>Fonctionnalités principales</h3>
+    <div class="grid">
+      <div class="card">
+        <h4>👤 Authentification</h4>
+        <p>Inscription et connexion sécurisées pour chaque étudiant.</p>
+      </div>
+      <div class="card">
+        <h4>🧠 Profil étudiant</h4>
+        <p>Ajoute tes compétences, projets, technologies et centres d’intérêt.</p>
+      </div>
+      <div class="card">
+        <h4>📢 Annonces de projets</h4>
+        <p>Publie ou rejoins des projets étudiants en un clic.</p>
+      </div>
+      <div class="card">
+        <h4>🤝 Demandes de collaboration</h4>
+        <p>Envoie ou reçois des demandes pour rejoindre une équipe.</p>
+      </div>
+      <div class="card">
+        <h4>💬 Messagerie interne</h4>
+        <p>Discute directement avec tes collaborateurs (à venir).</p>
+      </div>
+      <div class="card">
+        <h4>🤖 IA & recommandations</h4>
+        <p>Découvre des partenaires et projets adaptés à ton profil (prochainement).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects section -->
+  <section id="projects" class="projects container">
+    <h3>Dernières annonces de projets</h3>
+    <div id="project-list" class="grid"></div>
+    <button id="addProjectBtn" class="btn-primary">Publier un projet</button>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about container">
+    <h3>À propos</h3>
+    <p><strong>CollabSpace</strong> est une plateforme conçue par des étudiants pour des étudiants. Elle vise à faciliter la collaboration académique, la création de projets et l’échange d’idées entre futurs innovateurs.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 CollabSpace | Réalisé par Ayoub & Lberni</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
