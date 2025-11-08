@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkillBridge — Connexion</title>
+  <title>SkillBridge — Inscription</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js" defer></script>
 
-  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="sign_up.css">
 </head>
 <body>
 
@@ -42,15 +42,21 @@
     <!-- ========== DROITE ========== -->
     <section class="right-panel">
       <div class="glass-card">
-        <h3>Connexion</h3>
-        <p class="small muted">Bienvenue à nouveau 👋</p>
+        <h3>Inscription</h3>
+        <p class="small muted">Crée votre compte </p>
 
         <form id="loginForm" novalidate>
           <div class="field">
             <input id="email" type="email" required autocomplete="username" />
+            <label for="email">Nom</label>
+            <small class="error"></small>
+          </div>
+           <div class="field">
+            <input id="email" type="email" required autocomplete="username" />
             <label for="email">Email</label>
             <small class="error"></small>
           </div>
+          
 
           <div class="field">
             <input id="password" type="password" required autocomplete="current-password" />
@@ -66,12 +72,12 @@
             <a href="#" class="forgot">Mot de passe oublié ?</a>
           </div>
 
-          <button type="submit" class="btn-primary full">Connexion</button>
+          <button type="submit" class="btn-primary full">Sign Yp</button>
 
           <div class="divider"><span>ou</span></div>
 
           <div class="register-cta">
-            <p>Pas encore de compte ? <a href="../sign_up/sign_up.html" id="toSignup">Inscription</a></p>
+            <p>Pas encore de compte ? <a href="../login/login.html" id="toSignup">Connexion</a></p>
           </div>
         </form>
       </div>
@@ -79,6 +85,6 @@
     </section>
   </main>
 
-  <script src="login.js" defer></script>
+  <script src="sign_up.js" defer></script>
 </body>
 </html>
