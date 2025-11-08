@@ -1,91 +1,240 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillBridge - Espace de collaboration étudiante</title>
-  <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge - Connectez-vous avec des étudiants passionnés</title>
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-  <!-- Navigation -->
-  <header class="navbar">
-    <div class="container nav-inner">
-      <h1 class="logo">Skill<span>Bridge</span></h1>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#features">Fonctionnalités</a></li>
-          <li><a href="#projects">Annonces</a></li>
-          <li><a href="#about">À propos</a></li>
-          <li><button id="loginBtn" class="btn-primary">Connexion</button></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Hero section -->
-  <section class="hero">
-    <div class="container hero-content">
-      <div class="text">
-        <h2>Collabore avec d'autres étudiants pour construire l'avenir</h2>
-        <p>Rejoins la plateforme qui connecte les étudiants selon leurs compétences, centres d’intérêt et projets communs.</p>
-        <div class="hero-actions">
-          <button id="signupBtn" class="btn-primary">Créer un compte</button>
-          <button class="btn-secondary">Découvrir les projets</button>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <h1>SkillBridge</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#features">Fonctionnalités</a></li>
+                    <li><a href="#how-it-works">Comment ça marche</a></li>
+                    <li><a href="#projects">Projets</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="./login/login.html" class="btn btn-secondary">Connexion</a>
+                    <a href="signup.html" class="btn btn-primary">Inscription</a>
+                </div>
+            </div>
         </div>
-      </div>
-      <img src="assets/images/téléchargement-removebg-preview.png" alt="Students collaboration" class="hero-img">
-    </div>
-  </section>
+    </nav>
 
-  <!-- Features -->
-  <section id="features" class="features container">
-    <h3>Fonctionnalités principales</h3>
-    <div class="grid">
-      <div class="card">
-        <h4>👤 Authentification</h4>
-        <p>Inscription et connexion sécurisées pour chaque étudiant.</p>
-      </div>
-      <div class="card">
-        <h4>🧠 Profil étudiant</h4>
-        <p>Ajoute tes compétences, projets, technologies et centres d’intérêt.</p>
-      </div>
-      <div class="card">
-        <h4>📢 Annonces de projets</h4>
-        <p>Publie ou rejoins des projets étudiants en un clic.</p>
-      </div>
-      <div class="card">
-        <h4>🤝 Demandes de collaboration</h4>
-        <p>Envoie ou reçois des demandes pour rejoindre une équipe.</p>
-      </div>
-      <div class="card">
-        <h4>💬 Messagerie interne</h4>
-        <p>Discute directement avec tes collaborateurs (à venir).</p>
-      </div>
-      <div class="card">
-        <h4>🤖 IA & recommandations</h4>
-        <p>Découvre des partenaires et projets adaptés à ton profil (prochainement).</p>
-      </div>
-    </div>
-  </section>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Trouvez votre équipe parfaite</h2>
+                <p class="hero-subtitle">Connectez-vous avec des étudiants partageant vos passions, collaborez sur des projets innovants et développez vos compétences ensemble.</p>
+                <div class="hero-buttons">
+                    <a href="signup.html" class="btn btn-primary btn-large">Commencer gratuitement</a>
+                    <a href="#how-it-works" class="btn btn-outline btn-large">En savoir plus</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Étudiants actifs</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Projets en cours</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Technologies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Projects section -->
-  <section id="projects" class="projects container">
-    <h3>Dernières annonces de projets</h3>
-    <div id="project-list" class="grid"></div>
-    <button id="addProjectBtn" class="btn-primary">Publier un projet</button>
-  </section>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Pourquoi choisir SkillBridge ?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>Profil personnalisé</h3>
+                    <p>Créez un profil complet avec vos compétences, projets et centres d'intérêt pour vous démarquer.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Recherche intelligente</h3>
+                    <p>Trouvez facilement des projets qui correspondent à vos compétences et aspirations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Collaboration facile</h3>
+                    <p>Rejoignez des équipes et travaillez ensemble sur des projets passionnants.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Messagerie intégrée</h3>
+                    <p>Communiquez directement avec d'autres étudiants via notre système de messagerie.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Suivi de projets</h3>
+                    <p>Gérez vos projets et suivez l'avancement de vos collaborations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Recommandations</h3>
+                    <p>Recevez des suggestions de projets et collaborateurs adaptés à votre profil.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- About -->
-  <section id="about" class="about container">
-    <h3>À propos</h3>
-    <p><strong>SkillBridge</strong> est une plateforme conçue par des étudiants pour des étudiants. Elle vise à faciliter la collaboration académique, la création de projets et l’échange d’idées entre futurs innovateurs.</p>
-  </section>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Comment ça marche ?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Créez votre profil</h3>
+                    <p>Inscrivez-vous et remplissez votre profil avec vos compétences, projets et intérêts.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Explorez les projets</h3>
+                    <p>Parcourez les annonces de projets ou publiez votre propre idée.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Connectez-vous</h3>
+                    <p>Envoyez des demandes pour rejoindre des projets ou acceptez des collaborateurs.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Collaborez</h3>
+                    <p>Travaillez ensemble, partagez des idées et créez quelque chose d'extraordinaire.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 SkillBridge | Réalisé par El Fallah & Lberni</p>
-  </footer>
+    <!-- Projects Preview Section -->
+    <section id="projects" class="projects-preview">
+        <div class="container">
+            <h2 class="section-title">Projets récents</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Application Mobile Fitness</h3>
+                        <span class="project-status">Recherche membres</span>
+                    </div>
+                    <p class="project-description">Développement d'une app de suivi sportif avec React Native</p>
+                    <div class="project-tags">
+                        <span class="tag">React Native</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">UI/UX</span>
+                    </div>
+                    <div class="project-footer">
+                        <span>3/5 membres</span>
+                        <a href="signup.html" class="btn btn-small">Rejoindre</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Plateforme E-learning</h3>
+                        <span class="project-status">En cours</span>
+                    </div>
+                    <p class="project-description">Création d'une plateforme éducative interactive</p>
+                    <div class="project-tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                    <div class="project-footer">
+                        <span>5/5 membres</span>
+                        <a href="signup.html" class="btn btn-small btn-disabled">Complet</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Bot Discord Éducatif</h3>
+                        <span class="project-status">Recherche membres</span>
+                    </div>
+                    <p class="project-description">Bot pour aider les étudiants avec leurs devoirs</p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Discord.py</span>
+                        <span class="tag">AI</span>
+                    </div>
+                    <div class="project-footer">
+                        <span>2/4 membres</span>
+                        <a href="signup.html" class="btn btn-small">Rejoindre</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-center">
+                <a href="signup.html" class="btn btn-primary">Voir tous les projets</a>
+            </div>
+        </div>
+    </section>
 
-  <script src="index.js"></script>
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Prêt à commencer votre aventure ?</h2>
+            <p>Rejoignez des centaines d'étudiants passionnés et donnez vie à vos idées</p>
+            <a href="signup.html" class="btn btn-primary btn-large">Créer un compte gratuit</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SkillBridge</h3>
+                    <p>La plateforme qui connecte les étudiants autour de projets innovants.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#features">Fonctionnalités</a></li>
+                        <li><a href="#projects">Projets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Légal</h4>
+                    <ul>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#">Facebook</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillBridge. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./index.js"></script>
 </body>
 </html>
