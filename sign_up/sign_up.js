@@ -1,25 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
   const email = document.getElementById("email");
+  const nom = document.getElementById("nom");
   const password = document.getElementById("password");
   const togglePwd = document.getElementById("togglePwd");
   const pageWipe = document.getElementById("page-wipe");
   const toSignup = document.getElementById("toSignup");
 
-  email.placeholder = " ";
-  password.placeholder = " ";
+  // placeholders for floating labels
+  [email, nom, password].forEach(i => i.placeholder = " ");
 
-  // 👁️ Toggle password
-  togglePwd.addEventListener("click", () => {
+  // 👁️ Toggle password visibility
+  togglePwd?.addEventListener("click", () => {
     const t = password.type === "password" ? "text" : "password";
     password.type = t;
     togglePwd.textContent = t === "text" ? "🙈" : "👁️";
   });
 
-  function validateEmail(v) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-  }
+  // ✉️ Validate email format
+  const validateEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
+  // ⚠️ Show or clear field errors
   function setError(input, msg) {
     const field = input.closest(".field");
     const err = field.querySelector(".error");
@@ -28,25 +29,35 @@ document.addEventListener("DOMContentLoaded", () => {
     input.classList.toggle("invalid", !!msg);
   }
 
+  // 🚀 Submit handler
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     let ok = true;
 
+    // validate nom
+    if (nom.value.trim().length < 2) {
+      setError(nom, "Nom trop court.");
+      ok = false;
+    } else setError(nom, "");
+
+    // validate email
     if (!validateEmail(email.value.trim())) {
       setError(email, "Email invalide.");
       ok = false;
     } else setError(email, "");
 
+    // validate password
     if (password.value.trim().length < 6) {
       setError(password, "Min. 6 caractères.");
       ok = false;
     } else setError(password, "");
 
     if (!ok) return;
-    simulateLogin();
+    simulateSignup();
   });
 
-  function simulateLogin() {
+  // ✨ Simulate signup + GSAP page wipe
+  function simulateSignup() {
     const btn = form.querySelector(".btn-primary");
     btn.disabled = true;
     btn.style.opacity = 0.95;
@@ -61,13 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
           ease: "power3.inOut",
           delay: 0.1,
           onComplete: () => {
-            btn.textContent = "Connecté ✓";
-            setTimeout(() => { btn.disabled = false; btn.textContent = "Connexion"; }, 800);
+            btn.textContent = "Compte créé ✓";
+            setTimeout(() => { btn.disabled = false; btn.textContent = "Créer le compte"; }, 800);
           }
         });
     }
   }
 
+  // 🔁 Optional link transition (back to login)
   if (toSignup) {
     toSignup.addEventListener("click", (e) => {
       e.preventDefault();
@@ -85,11 +97,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✨ Entrées douces
+
   if (window.gsap) {
     gsap.from(".glass-card", { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" });
-    gsap.from(".left-panel .hero-copy h2", { opacity: 0, x: -20, duration: 0.9, delay: 0.1 });
-    gsap.from(".features-list li", { opacity: 0, x: -8, stagger: 0.1, duration: 0.6, delay: 0.2 });
     gsap.from(".brand", { opacity: 0, y: -8, duration: 0.7 });
   }
 });

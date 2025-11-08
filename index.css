@@ -26,6 +26,7 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--bg-white);
+    padding-top: 80px; /* adjust if your navbar height is different */
 }
 
 .container {
@@ -33,51 +34,84 @@ body {
     margin: 0 auto;
     padding: 0 20px;
 }
+/* Navbar */
 
-/* Navigation */
 .navbar {
-    background-color: var(--bg-white);
-    box-shadow: var(--shadow);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    padding: 1rem 0;
+  position: fixed;               /* Fix the navbar */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-white);
+  box-shadow: var(--shadow);
+  z-index: 9999;                 /* Make sure it stays above everything */
+  padding: 1rem 0;
+  z-index: 999; /* keep it above everything else */
+  background: rgba(255, 255, 255, 0.9); /* translucent background */
 }
+
+
 
 .nav-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+/* Logo */
 .logo h1 {
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.5px;
+}
+.logo span {
+  color: var(--primary-color);
 }
 
+/* Nav Links */
 .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
 }
 
 .nav-links a {
-    text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 500;
-    transition: color 0.3s;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: color 0.3s, transform 0.2s;
 }
 
 .nav-links a:hover {
-    color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-1px);
 }
 
-.nav-buttons {
-    display: flex;
-    gap: 1rem;
+/* Make "Connexion" look like a button */
+.nav-links .btn {
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
+.nav-links .btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}
+D
 /* Buttons */
 .btn {
     padding: 0.6rem 1.5rem;
@@ -527,4 +561,13 @@ body {
     .footer-content {
         grid-template-columns: 1fr;
     }
+}
+
+.logo h1 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #bab7b7;
+}
+.logo span {
+  color: #60a5fa;
 }
