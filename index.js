@@ -12,31 +12,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar scroll effect
-let lastScroll = 0;
-const navbar = document.querySelector('.navbar');
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll <= 0) {
-        navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-        return;
-    }
-    
-    if (currentScroll > lastScroll) {
-        // Scrolling down
-        navbar.style.transform = 'translateY(-100%)';
-    } else {
-        // Scrolling up
-        navbar.style.transform = 'translateY(0)';
-        navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-    }
-    
-    lastScroll = currentScroll;
-});
-
-navbar.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
 
 // Intersection Observer for fade-in animations
 const observerOptions = {

@@ -20,13 +20,13 @@
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
-
+ 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--bg-white);
-    padding-top: 80px; /* adjust if your navbar height is different */
+    margin-top: 70px;/* adjust if your navbar height is different */
 }
 
 .container {
@@ -45,8 +45,7 @@ body {
   box-shadow: var(--shadow);
   z-index: 9999;                 /* Make sure it stays above everything */
   padding: 1rem 0;
-  z-index: 999; /* keep it above everything else */
-  background: rgba(255, 255, 255, 0.9); /* translucent background */
+  background: rgb(255, 255, 255) /* translucent background */
 }
 
 
