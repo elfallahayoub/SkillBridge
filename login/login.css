@@ -42,13 +42,21 @@ body {
   filter: blur(60px);
   pointer-events: none;
 }
-.brand h1 {
+h1, h1 span {
+  border: none !important;
+  text-decoration: none !important;
+}
+h1::after, h1::before, h1 span::after, h1 span::before {
+  content: none !important;
+}
+
+.logo span {
+  color: #60a5fa;
+}
+.logo h1{
   font-size: 2.3rem;
   font-weight: 800;
   color: #ffffff;
-}
-.brand span {
-  color: #60a5fa;
 }
 .eyebrow {
   font-size: 0.95rem;
@@ -73,6 +81,8 @@ body {
 }
 .left-footer {
   font-size: 0.85rem;
+  margin-bottom: -30px;
+  text-align: center;
   opacity: 0.6;
 }
 
