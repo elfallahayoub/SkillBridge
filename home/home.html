@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SkillBridge — Accueil</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js" defer></script>
+
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+  <header class="navbar">
+    <h1 class="logo">Skill<span>Bridge</span></h1>
+    <input type="text" id="search" placeholder="Rechercher un projet...">
+    <div class="nav-buttons">
+      <button id="addProject" class="btn-primary">+ Publier</button>
+      <a href="profile.html" class="btn-secondary">Mon profil</a>
+      <button id="logout" class="btn-secondary">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="page-title">Projets étudiants</h2>
+    <div id="projects" class="projects-list">
+      <!-- les projets s'afficheront ici -->
+    </div>
+  </main>
+
+  <!-- Popup pour publier un projet -->
+  <div id="projectModal" class="modal hidden">
+    <div class="modal-content glass-card">
+      <h3>Publier un projet</h3>
+      <form id="projectForm">
+        <div class="field">
+          <input id="title" type="text" required placeholder=" ">
+          <label for="title">Titre du projet</label>
+        </div>
+        <div class="field">
+          <textarea id="description" required placeholder=" "></textarea>
+          <label for="description">Description</label>
+        </div>
+        <div class="field">
+          <input id="skills" type="text" required placeholder=" ">
+          <label for="skills">Compétences recherchées</label>
+        </div>
+        <button type="submit" class="btn-primary full">Publier</button>
+      </form>
+      <button id="closeModal" class="close-btn">✖</button>
+    </div>
+  </div>
+
+  <footer class="footer">© 2025 SkillBridge — Communauté étudiante</footer>
+
+  <script src="home.js" defer></script>
+</body>
+</html>

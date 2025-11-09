@@ -5,30 +5,20 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SkillBridge — Connexion</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js" defer></script>
-
   <link rel="stylesheet" href="login.css">
 </head>
 <body>
-
-  <!-- Transition Overlay -->
   <div id="page-wipe" aria-hidden="true"></div>
 
   <main class="login-page">
     <!-- ========== GAUCHE ========== -->
     <section class="left-panel">
       <div class="brand">
-        <a href="../index.html" class="logo">
-          <h1>Skill<span>Bridge</span></h1>
-        </a>
+        <h1>Skill<span>Bridge</span></h1>
         <p class="eyebrow">Connecte. Collabore. Crée.</p>
       </div>
-      
-
 
       <div class="hero-copy">
         <h2>Travaille avec les meilleurs.</h2>
@@ -51,19 +41,17 @@
 
         <form id="loginForm" novalidate>
           <div class="field">
-            <input id="email" type="email" required autocomplete="username" />
+            <input id="email" type="email" required autocomplete="username" placeholder=" " />
             <label for="email">Email</label>
             <small class="error"></small>
           </div>
 
           <div class="field">
-            <input id="password" type="password" required autocomplete="current-password" />
+            <input id="password" type="password" required autocomplete="current-password" placeholder=" " />
             <label for="password">Mot de passe</label>
             <button type="button" id="togglePwd" class="pwd-toggle">👁️</button>
             <small class="error"></small>
           </div>
-
-         
 
           <button type="submit" class="btn-primary full">Connexion</button>
 
@@ -74,7 +62,6 @@
           </div>
         </form>
       </div>
-
     </section>
   </main>
 

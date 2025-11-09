@@ -9,13 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
   email.placeholder = " ";
   password.placeholder = " ";
 
-  // 👁️ Toggle password
+  // 👁️ Toggle password visibility
   togglePwd.addEventListener("click", () => {
-    const t = password.type === "password" ? "text" : "password";
-    password.type = t;
-    togglePwd.textContent = t === "text" ? "🙈" : "👁️";
+    const type = password.type === "password" ? "text" : "password";
+    password.type = type;
+    togglePwd.textContent = type === "text" ? "🙈" : "👁️";
   });
 
+  // Validation
   function validateEmail(v) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   }
@@ -28,28 +29,30 @@ document.addEventListener("DOMContentLoaded", () => {
     input.classList.toggle("invalid", !!msg);
   }
 
+  // Soumission du formulaire
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    let ok = true;
+    let valid = true;
 
     if (!validateEmail(email.value.trim())) {
       setError(email, "Email invalide.");
-      ok = false;
+      valid = false;
     } else setError(email, "");
 
     if (password.value.trim().length < 6) {
       setError(password, "Min. 6 caractères.");
-      ok = false;
+      valid = false;
     } else setError(password, "");
 
-    if (!ok) return;
+    if (!valid) return;
     simulateLogin();
   });
 
+  // Simulation de connexion + redirection vers home
   function simulateLogin() {
     const btn = form.querySelector(".btn-primary");
     btn.disabled = true;
-    btn.style.opacity = 0.95;
+    btn.textContent = "Connexion...";
 
     if (window.gsap) {
       gsap.timeline()
@@ -61,13 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
           ease: "power3.inOut",
           delay: 0.1,
           onComplete: () => {
-            btn.textContent = "Connecté ✓";
-            setTimeout(() => { btn.disabled = false; btn.textContent = "Connexion"; }, 800);
+            // ✅ Sauvegarde temporaire utilisateur
+            localStorage.setItem("userEmail", email.value);
+            window.location.href = "../home/home.html";
           }
         });
     }
   }
 
+  // Animation vers Inscription
   if (toSignup) {
     toSignup.addEventListener("click", (e) => {
       e.preventDefault();
@@ -85,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✨ Entrées douces
+  // Effets d'entrée
   if (window.gsap) {
     gsap.from(".glass-card", { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" });
     gsap.from(".left-panel .hero-copy h2", { opacity: 0, x: -20, duration: 0.9, delay: 0.1 });
