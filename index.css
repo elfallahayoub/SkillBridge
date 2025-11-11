@@ -211,7 +211,14 @@ D
     justify-content: center;
     margin-bottom: 3rem;
     animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    
 }
+.btn.btn-primary.btn-large{
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: rgb(105, 171, 171);
+}
+
 
 .hero-stats {
     display: flex;
