@@ -216,7 +216,8 @@ D
 .btn.btn-primary.btn-large{
     text-decoration: none;
     border-radius: 8px;
-    background-color: rgb(105, 171, 171);
+    background-color: #bab7b7;
+    color: rgb(24, 71, 71);
 }
 
 
