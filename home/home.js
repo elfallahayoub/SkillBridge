@@ -1,11 +1,67 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== DOM ELEMENTS =====
-  const navIconBtns = document.querySelectorAll(".nav-icon-btn");
+  // ===== NAVBAR PROFILE DROPDOWN =====
+  const profileBtn = document.getElementById("profileBtn");
+  const profileMenu = document.querySelector(".navbar-profile .profile-menu");
+  
+  if (profileBtn && profileMenu) {
+    profileBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      profileMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".navbar-profile")) {
+        profileMenu.classList.add("hidden");
+      }
+    });
+
+    // Close menu on item click
+    document.querySelectorAll(".profile-menu .menu-item").forEach(item => {
+      item.addEventListener("click", () => {
+        profileMenu.classList.add("hidden");
+      });
+    });
+  }
+
+  // ===== PAGE NAVIGATION =====
+  const navItems = document.querySelectorAll(".nav-item[data-page]");
   const mainContainer = document.querySelector(".main-container");
   const messengerPage = document.getElementById("messenger-page");
   const explorePage = document.getElementById("explore-page");
   
-  // Feed
+  function switchPage(page) {
+    mainContainer.classList.add("hidden");
+    messengerPage.classList.add("hidden");
+    explorePage.classList.add("hidden");
+    messengerPage.classList.remove("active");
+    explorePage.classList.remove("active");
+    
+    navItems.forEach(btn => btn.classList.remove("active"));
+    
+    if (page === "feed") {
+      mainContainer.classList.remove("hidden");
+      document.querySelector('[data-page="feed"]').classList.add("active");
+    } else if (page === "messenger") {
+      messengerPage.classList.remove("hidden");
+      messengerPage.classList.add("active");
+      document.querySelector('[data-page="messenger"]').classList.add("active");
+      renderConversations();
+    } else if (page === "explore") {
+      explorePage.classList.remove("hidden");
+      explorePage.classList.add("active");
+      document.querySelector('[data-page="explore"]').classList.add("active");
+      renderExplore();
+    }
+  }
+
+  navItems.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const page = btn.getAttribute("data-page");
+      switchPage(page);
+    });
+  });
+
+  // ===== DOM ELEMENTS =====
   const openComposer = document.querySelector(".composer-input");
   const composerModal = document.getElementById("composerModal");
   const closeComposer = document.getElementById("closeComposer");
@@ -41,37 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentUser = JSON.parse(localStorage.getItem("user")) || { name: "Anonyme", id: "user_" + Date.now() };
   let currentConversationId = null;
 
-  // ===== PAGE NAVIGATION =====
-  function switchPage(page) {
-    mainContainer.classList.add("hidden");
-    messengerPage.classList.add("hidden");
-    explorePage.classList.add("hidden");
-    messengerPage.classList.remove("active");
-    explorePage.classList.remove("active");
-    
-    navIconBtns.forEach(btn => btn.classList.remove("active"));
-    
-    if (page === "feed") {
-      mainContainer.classList.remove("hidden");
-      document.querySelector('[data-page="feed"]').classList.add("active");
-    } else if (page === "messenger") {
-      messengerPage.classList.remove("hidden");
-      messengerPage.classList.add("active");
-      document.querySelector('[data-page="messenger"]').classList.add("active");
-    } else if (page === "explore") {
-      explorePage.classList.remove("hidden");
-      explorePage.classList.add("active");
-      document.querySelector('[data-page="explore"]').classList.add("active");
-      renderExplore();
-    }
+  // Update profile name in navbar
+  const profileNameEl = document.getElementById("profileName");
+  if (profileNameEl) {
+    profileNameEl.textContent = currentUser.name;
   }
-
-  navIconBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const page = btn.getAttribute("data-page");
-      switchPage(page);
-    });
-  });
 
   // ===== FEED SECTION =====
   function renderPosts() {
