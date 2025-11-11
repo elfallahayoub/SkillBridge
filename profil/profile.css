@@ -1,0 +1,161 @@
+:root {
+  --bg1: #0f172a;
+  --bg2: #1e293b;
+  --accent1: #60a5fa;
+  --accent2: #34d399;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --glass: rgba(255, 255, 255, 0.08);
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #fff;
+}
+.logo span {
+  color: var(--accent1);
+}
+
+nav a, nav button {
+  margin-left: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.btn-primary:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+/* ===== PROFILE CARD ===== */
+.profile-card {
+  background: var(--glass);
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.avatar-container {
+  position: relative;
+}
+.avatar-container img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid var(--accent1);
+  object-fit: cover;
+}
+.edit-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--accent1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.info h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+.info p {
+  margin: 6px 0;
+  color: var(--muted);
+}
+#editProfile {
+  margin-top: 10px;
+}
+
+/* ===== PROJECTS ===== */
+.projects-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+.projects-list {
+  display: grid;
+  gap: 16px;
+}
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.25s ease;
+}
+.project-card:hover {
+  transform: translateY(-3px);
+}
+.project-card h4 {
+  margin: 0;
+  color: var(--accent1);
+}
+.project-card p {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
