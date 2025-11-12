@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  z-index: 1000;
+}
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.12);
+}
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+.logo span {
+  color: #60a5fa;
+}
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+.navbar a {
+  text-decoration: none;
+  color: #fff;
+  opacity: 0.8;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.navbar a:hover,
+.navbar a.active {
+  opacity: 1;
+  color: #60a5fa;
+}
+
+/* ===== Projects Section ===== */
+.projects {
+  padding: 120px 20px;
+  text-align: center;
+}
+.projects h1 {
+  font-size: 2.4rem;
+  color: #60a5fa;
+  margin-bottom: 40px;
+}
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+.project-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-5px);
+}
+.project-card h3 {
+  color: #60a5fa;
+  margin-bottom: 10px;
+}
+.project-card p {
+  opacity: 0.85;
+  margin-bottom: 15px;
+}
+.join-btn {
+  background: linear-gradient(135deg, #60a5fa, #34d399);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0.8rem;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.join-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 25px;
+  }
+  .project-list {
+    flex-direction: column;
+    align-items: center;
+  }
+}
