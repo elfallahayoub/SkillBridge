@@ -1,264 +1,61 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillBridge — Accueil</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js" defer></script>
-
-  <link rel="stylesheet" href="/home/home.css">
+  <link rel="stylesheet" href="home.css">
 </head>
 <body>
-  <!-- NAVBAR SIMPLE ET MINIMALISTE -->
+  <!-- Navbar -->
   <header class="navbar">
-    <div class="navbar-container">
-      <!-- Logo -->
-      <a href="../index.html" class="navbar-brand">
-        <span class="brand-text">Skill<span class="brand-highlight">Bridge</span></span>
-      </a>
-
-      <!-- Spacer -->
-      <div class="navbar-spacer"></div>
-
-      <!-- Center Navigation -->
-      <nav class="navbar-nav">
-        <button class="nav-item" data-page="feed" title="Accueil">
-          📰
-        </button>
-        <button class="nav-item" data-page="messenger" title="Messages">
-          💬
-        </button>
-        <button class="nav-item" data-page="explore" title="Explorer">
-          🔍
-        </button>
-      </nav>
-
-      <!-- Right Section -->
-      <div class="navbar-right">
-        <button id="addProject" class="nav-action" title="Créer">
-          ➕
-        </button>
-        <button id="notifBtn" class="nav-action" title="Notifications">
-          🔔
-          <span class="notif-count">3</span>
-        </button>
-        <div class="navbar-profile">
-          <button id="profileBtn" class="profile-btn">
-            👤
-          </button>
-          <div class="profile-menu hidden">
-            <div style="padding: 12px 16px; border-bottom: 1px solid rgba(100, 100, 100, 0.2);">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="font-size: 1.5rem; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(96, 165, 250, 0.15); border-radius: 6px;">👤</div>
-                <div>
-                  <div style="font-weight: 600; color: #ccc; font-size: 0.9rem;" id="profileName">User</div>
-                  <div style="color: #888; font-size: 0.8rem;">Online</div>
-                </div>
-              </div>
-            </div>
-            <a href="../profil/profile.html" class="menu-item">👤 Profil</a>
-            <a href="#" class="menu-item">⚙️ Paramètres</a>
-            <a href="#" class="menu-item">❓ Aide</a>
-            <div class="menu-divider"></div>
-            <button id="logout" class="menu-item logout">🚪 Déconnexion</button>
-          </div>
-        </div>
-      </div>
+    <div class="logo">Skill<span>Bridge</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Accueil</a></li>
+        <li><a href="#">Projets</a></li>
+        <li><a href="#">Équipe</a></li>
+        <li><a href="#">Communauté</a></li>
+        <li><a href="#">Profil</a></li>
+      </ul>
+    </nav>
+    <div class="profile">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Profil" class="avatar">
+      <span id="username">Utilisateur</span>
     </div>
   </header>
 
-  <main class="main-container">
-    <!-- SIDEBAR LEFT -->
-    <aside class="sidebar-left">
-      <div class="user-card">
-        <div class="user-avatar">👤</div>
-        <div class="user-info">
-          <p class="user-name">Mon Profil</p>
-          <p class="user-status">Étudiant</p>
-        </div>
-      </div>
-      <div class="shortcuts">
-        <a href="#" class="shortcut-item">📋 Mes Projets</a>
-        <a href="#" class="shortcut-item">👥 Mes Amis</a>
-        <a href="#" class="shortcut-item">⭐ Favoris</a>
-        <a href="#" class="shortcut-item">📅 Événements</a>
-      </div>
-    </aside>
+  <!-- Section principale -->
+  <main class="home-container">
+   
+    
 
-    <!-- FEED CENTER -->
-    <main class="feed-container">
-      <!-- COMPOSER -->
-      <div class="composer">
-        <div class="composer-avatar">👤</div>
-        <button class="composer-input" id="openComposer">À quoi penses-tu ?</button>
+    <section class="cards">
+      <div class="card">
+        <h2>Créer un projet</h2>
+        <p>Lance ton propre projet et trouve les meilleurs collaborateurs.</p>
+        <button>Commencer</button>
       </div>
-
-      <!-- POSTS FEED -->
-      <div id="posts-feed" class="posts-feed">
-        <p class="empty-state">Aucun projet pour le moment...</p>
+      <div class="card">
+        <h2>Rejoindre une équipe</h2>
+        <p>Découvre les projets en cours et rejoins une équipe ambitieuse.</p>
+        <button>Explorer</button>
       </div>
-    </main>
-
-    <!-- SIDEBAR RIGHT -->
-    <aside class="sidebar-right">
-      <div class="sidebar-section">
-        <h4>🔥 Tendances</h4>
-        <div class="trending-mini">
-          <div class="trending-item">
-            <span class="trending-label">Web Development</span>
-            <span class="trending-count">245</span>
-          </div>
-          <div class="trending-item">
-            <span class="trending-label">Mobile Apps</span>
-            <span class="trending-count">189</span>
-          </div>
-          <div class="trending-item">
-            <span class="trending-label">AI & ML</span>
-            <span class="trending-count">156</span>
-          </div>
-          <div class="trending-item">
-            <span class="trending-label">Data Science</span>
-            <span class="trending-count">143</span>
-          </div>
-        </div>
+      <div class="card">
+        <h2>Explorer la communauté</h2>
+        <p>Entre en contact avec des étudiants partageant tes intérêts.</p>
+        <button>Découvrir</button>
       </div>
-
-      <div class="sidebar-section">
-        <h4>👥 Suggérés</h4>
-        <div class="suggested-users">
-          <div class="user-suggestion">
-            <span class="user-avatar-small">👨</span>
-            <div class="user-sugg-info">
-              <p>Ahmed</p>
-              <p class="text-muted">2 amis communs</p>
-            </div>
-            <button class="btn-follow">+</button>
-          </div>
-          <div class="user-suggestion">
-            <span class="user-avatar-small">👩</span>
-            <div class="user-sugg-info">
-              <p>Fatima</p>
-              <p class="text-muted">3 amis communs</p>
-            </div>
-            <button class="btn-follow">+</button>
-          </div>
-        </div>
-      </div>
-    </aside>
+    </section>
   </main>
 
-  <!-- PAGES CACHÉES -->
-  <div id="messenger-page" class="page hidden">
-    <div class="messenger-layout">
-      <div class="conversations-panel">
-        <div class="conversations-header">
-          <h3>Discussions</h3>
-          <button id="newConversation" class="btn-new-chat">+</button>
-        </div>
-        <div class="search-conversations">
-          <input type="text" id="searchConversation" placeholder="Chercher...">
-        </div>
-        <div id="conversations-list" class="conversations-list">
-          <p class="empty-state">Aucune conversation</p>
-        </div>
-      </div>
-      <div class="chat-panel">
-        <div id="no-chat-selected" class="no-chat-selected">
-          <p>💬 Sélectionne une conversation</p>
-        </div>
-        <div id="chat-area" class="chat-area hidden">
-          <div class="chat-header">
-            <div id="chatTitle" class="chat-title"></div>
-            <button id="closeChat" class="btn-close-chat">✖</button>
-          </div>
-          <div id="messages-container" class="messages-container"></div>
-          <div class="message-input-area">
-            <input type="text" id="messageInput" placeholder="Écris un message...">
-            <button id="sendMessage" class="btn-send">Envoyer</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Bouton Messenger -->
+  <button id="messenger-btn" title="Discuter 💬">
+    💬
+  </button>
 
-  <div id="explore-page" class="page hidden">
-    <div class="explore-container">
-      <h2>Explorer les projets</h2>
-      <div class="filter-options">
-        <select id="categoryFilter" class="filter-select">
-          <option value="">Toutes les catégories</option>
-          <option value="web">Web</option>
-          <option value="mobile">Mobile</option>
-          <option value="data">Data</option>
-          <option value="ai">IA</option>
-          <option value="design">Design</option>
-        </select>
-      </div>
-      <div id="explore-grid" class="explore-grid"></div>
-    </div>
-  </div>
-
-  <!-- Modal Composer -->
-  <div id="composerModal" class="modal hidden">
-    <div class="modal-content glass-card">
-      <div class="composer-header">
-        <h3>Créer un projet</h3>
-        <button id="closeComposer" class="close-btn">✖</button>
-      </div>
-      <form id="projectForm">
-        <div class="field">
-          <input id="title" type="text" required placeholder=" ">
-          <label for="title">Titre du projet</label>
-        </div>
-        <div class="field">
-          <textarea id="description" required placeholder=" "></textarea>
-          <label for="description">Description</label>
-        </div>
-        <div class="field">
-          <select id="category" required>
-            <option value="">Sélectionner une catégorie</option>
-            <option value="web">Web</option>
-            <option value="mobile">Mobile</option>
-            <option value="data">Data</option>
-            <option value="ai">Intelligence Artificielle</option>
-            <option value="design">Design</option>
-          </select>
-          <label for="category">Catégorie</label>
-        </div>
-        <div class="field">
-          <input id="skills" type="text" required placeholder=" ">
-          <label for="skills">Compétences recherchées</label>
-        </div>
-        <button type="submit" class="btn-primary full">Publier</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal Nouvelle Conversation -->
-  <div id="conversationModal" class="modal hidden">
-    <div class="modal-content glass-card">
-      <h3>Nouvelle Conversation</h3>
-      <form id="conversationForm">
-        <div class="field">
-          <input id="conversationName" type="text" required placeholder=" ">
-          <label for="conversationName">Nom</label>
-        </div>
-        <div class="field">
-          <input id="participantsList" type="text" required placeholder=" ">
-          <label for="participantsList">Participants</label>
-        </div>
-        <button type="submit" class="btn-primary full">Créer</button>
-      </form>
-      <button id="closeConversationModal" class="close-btn">✖</button>
-    </div>
-  </div>
-
-  <footer class="footer">© 2025 SkillBridge — Connecte. Collabore. Crée.</footer>
-
-  <script src="home.js" defer></script>
-</body>
-</html>
+  <script src="home.js"></script>
 </body>
 </html>
