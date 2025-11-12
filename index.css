@@ -67,6 +67,87 @@ body {
   color: var(--primary-color);
 }
 
+
+/* Base navbar */
+.navbar {
+  background: var(--bg-white);
+  box-shadow: var(--shadow);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Hide menu button on desktop */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* --- Mobile Styles --- */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    color: var(--text-dark);
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -250px; /* start hidden */
+    width: 220px;
+    height: 100%;
+    background: var(--bg-white);
+    flex-direction: column;
+    align-items: start;
+    padding: 4rem 1.5rem;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+  }
+
+  .nav-links.show {
+    right: 0; /* slide in */
+  }
+
+  .nav-links li {
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    color: var(--text-dark);
+  }
+
+  
+}
+
+
+
+
 /* Nav Links */
 .nav-links {
   display: flex;
@@ -80,12 +161,12 @@ body {
   text-decoration: none;
   color: var(--text-dark);
   font-weight: 500;
+
   transition: color 0.3s, transform 0.2s;
 }
 
 .nav-links a:hover {
-  color: var(--primary-color);
-  transform: translateY(-1px);
+  color: rgb(15, 100, 139);
 }
 
 /* Make "Connexion" look like a button */
@@ -311,7 +392,9 @@ D
 /* How It Works Section */
 .how-it-works {
     padding: 5rem 0;
+
 }
+
 
 .steps {
     display: flex;
