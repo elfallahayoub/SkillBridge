@@ -1,31 +1,29 @@
-// Animation GSAP
-window.addEventListener("load", () => {
-  gsap.from(".navbar", { y: -80, opacity: 0, duration: 1, ease: "power3.out" });
-  gsap.from(".welcome h1", { y: 40, opacity: 0, duration: 1, delay: 0.3 });
-  gsap.from(".welcome p", { y: 30, opacity: 0, duration: 1, delay: 0.5 });
-  gsap.from(".card", {
-    opacity: 0,
-    y: 50,
-    stagger: 0.2,
-    duration: 1,
-    delay: 0.8,
-    ease: "power3.out"
-  });
-});
-
-// Nom de l'utilisateur depuis localStorage
-const userName = localStorage.getItem("username") || "Étudiant";
-document.getElementById("user-name").textContent = userName + " 👋";
-document.getElementById("username").textContent = userName;
-
-// Effet scroll sur navbar
-window.addEventListener("scroll", () => {
+document.addEventListener("DOMContentLoaded", () => {
+  // Navbar scroll effect
   const navbar = document.querySelector(".navbar");
-  if (window.scrollY > 50) navbar.classList.add("scrolled");
-  else navbar.classList.remove("scrolled");
-});
+  window.addEventListener("scroll", () => {
+    navbar.classList.toggle("scrolled", window.scrollY > 30);
+  });
 
-// Bouton Messenger (popup temporaire)
-document.getElementById("messenger-btn").addEventListener("click", () => {
-  alert("Fonctionnalité Messenger à venir 💬");
+  // GSAP Animations
+  if (window.gsap) {
+    gsap.from(".hero-content", { opacity: 0, y: 40, duration: 1 });
+    gsap.from(".card", { opacity: 0, y: 20, duration: 0.8, stagger: 0.2 });
+  }
+
+  // Chat toggle
+  const chatToggle = document.querySelector(".chat-toggle");
+  const chatBox = document.querySelector(".chat-box");
+  chatToggle.addEventListener("click", () => {
+    const visible = chatBox.style.display === "block";
+    if (!visible) {
+      chatBox.style.display = "block";
+      gsap.fromTo(chatBox, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 });
+    } else {
+      gsap.to(chatBox, {
+        opacity: 0, y: 20, duration: 0.3,
+        onComplete: () => chatBox.style.display = "none"
+      });
+    }
+  });
 });

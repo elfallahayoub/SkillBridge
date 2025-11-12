@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillBridge — Accueil</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js" defer></script>
   <link rel="stylesheet" href="home.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="home.js" defer></script>
 </head>
 <body>
+
   <!-- Navbar -->
   <header class="navbar">
     <div class="logo">Skill<span>Bridge</span></div>
     <nav>
-      <ul class="nav-links">
+      <ul>
         <li><a href="#" class="active">Accueil</a></li>
         <li><a href="#">Projets</a></li>
         <li><a href="#">Équipe</a></li>
-        <li><a href="#">Communauté</a></li>
         <li><a href="#">Profil</a></li>
       </ul>
     </nav>
-    <div class="profile">
-      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Profil" class="avatar">
-      <span id="username">Utilisateur</span>
-    </div>
   </header>
 
-  <!-- Section principale -->
-  <main class="home-container">
-   
+  <!-- Section d’accueil -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bienvenue sur <span>SkillBridge</span> 👋</h1>
+      <p>Collabore avec les meilleurs étudiants et construis ton avenir dès aujourd’hui.</p>
+      <button class="cta-btn">Explorer les projets</button>
+    </div>
+  </section>
+
+  <!-- Cartes principales -->
+  <section class="cards">
+    <div class="card">
+      <h3>Créer un projet</h3>
+      <p>Lance ton idée et trouve des collaborateurs passionnés.
+
+      </p>
+    </div>
     
+    <div class="card">
+      <h3>Rejoindre une équipe</h3>
+      <p>Découvre des projets qui correspondent à tes compétences.</p>
+    </div>
 
-    <section class="cards">
-      <div class="card">
-        <h2>Créer un projet</h2>
-        <p>Lance ton propre projet et trouve les meilleurs collaborateurs.</p>
-        <button>Commencer</button>
-      </div>
-      <div class="card">
-        <h2>Rejoindre une équipe</h2>
-        <p>Découvre les projets en cours et rejoins une équipe ambitieuse.</p>
-        <button>Explorer</button>
-      </div>
-      <div class="card">
-        <h2>Explorer la communauté</h2>
-        <p>Entre en contact avec des étudiants partageant tes intérêts.</p>
-        <button>Découvrir</button>
-      </div>
-    </section>
-  </main>
+    <div class="card">
+      <h3>Profil étudiant</h3>
+      <p>Présente tes talents et fais-toi remarquer par la communauté.</p>
+    </div>
+  </section>
 
-  <!-- Bouton Messenger -->
-  <button id="messenger-btn" title="Discuter 💬">
-    💬
-  </button>
+  <!-- Messenger intégré -->
+  <div class="chat-container">
+    <button class="chat-toggle">💬</button>
+    <div class="chat-box">
+      <div class="chat-header">Messenger SkillBridge</div>
+      <div class="chat-body">
+        <div class="msg incoming">Salut ! Tu travailles sur quel projet ?</div>
+        <div class="msg outgoing">Hey 😄 Je bosse sur une app IA collaborative !</div>
+        <div class="msg incoming">Super ! On pourrait échanger des idées !</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" placeholder="Écris un message...">
+        <button>Envoyer</button>
+      </div>
+    </div>
+  </div>
 
-  <script src="home.js"></script>
 </body>
 </html>
