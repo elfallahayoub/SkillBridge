@@ -11,27 +11,33 @@
     <nav class="navbar">
     <div class="container">
         <div class="nav-wrapper">
-        <!-- Logo (Left) -->
+        
+        <!-- Logo -->
         <div class="logo">
             <h1>Skill<span>Bridge</span></h1>
         </div>
 
-        <!-- New controls: theme toggle + accent picker -->
-        <div class="nav-controls" aria-hidden="false">
-            <button id="themeToggle" class="btn" aria-pressed="false" title="Basculer le thème">🌙</button>
-            <input id="accentPicker" type="color" value="#6366f1" title="Choisir la couleur d'accent" aria-label="Couleur d'accent" />
+        <!-- Theme Controls -->
+        <div class="nav-controls">
+            <button id="themeToggle" class="btn" title="Basculer le thème">🌙</button>
+            <input id="accentPicker" type="color" value="#6366f1" title="Choisir la couleur d'accent" />
         </div>
-        <!-- Right Navigation Items -->
-        <ul class="nav-links">
+
+        <!-- Mobile Menu Toggle (right side) -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links" id="navLinks">
             <li><a href="#how-it-works">À propos</a></li>
             <li><a href="#features">Fonctionnalités</a></li>
-            <li>
-            <a href="./login/login.html" class="btn btn-primary">Connexion</a>
-            </li>
+            <li><a href="./login/login.html" class="btn btn-primary connexion">Connexion</a></li>
         </ul>
+
         </div>
     </div>
     </nav>
+
+
 
 
 
