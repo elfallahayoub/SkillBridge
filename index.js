@@ -216,7 +216,7 @@ console.log('%cConnectez-vous avec des étudiants passionnés', 'color: #0a1515;
   const accentKey = 'skillbridge_accent';
   
   // Default color: RGB(10, 21, 21) = #0a1515
-  const DEFAULT_ACCENT = '#0a1515'; // RGB(10,21,21)
+  const DEFAULT_ACCENT = '#001138'; // RGB(10,21,21)
 
   // set CSS variable immediately so stylesheet fallbacks use it
   try { document.documentElement.style.setProperty('--primary-color', DEFAULT_ACCENT); } catch(e){/* ignore */}

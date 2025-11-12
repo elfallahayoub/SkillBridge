@@ -128,12 +128,28 @@ D
     background-color: var(--primary-color);
     color: white;
 }
-
-.btn-primary:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+.btn-primary {
+  background-color: #001138 !important; /* your dark blue base */
+  color: #ffffff !important;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
+
+/* Hover: gradient from blue bottom → white top */
+.btn-primary:hover {
+  background: linear-gradient(to top, #001138 20%, #f4f6fa 95%) !important;
+  color: #001138 !important; /* keeps text readable on the white top area */
+  box-shadow: 0 8px 20px rgba(0, 17, 56, 0.3);
+  transform: translateY(-2px);
+}
+
+
+
+
+
 
 .btn-secondary {
     background-color: transparent;
