@@ -63,15 +63,7 @@ body {
 }
 
 /* ===== HERO SECTION ===== */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 130px 20px 60px;
-}
+
 
 .hero-content {
   max-width: 750px;
@@ -106,6 +98,19 @@ body {
 }
 
 /* ===== CARDS ===== */
+/* ===== HERO SECTION (fusionnée avec cards) ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 130px 20px 60px;
+  gap: 50px; /* espace entre hero et cards */
+}
+
+/* ===== CARDS ===== */
 .cards {
   display: flex;
   justify-content: center;
@@ -121,15 +126,16 @@ body {
   border-radius: 1rem;
   padding: 2rem;
   text-align: center;
-  color: #fff;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.12);
 }
+
+
 
 .card h3 {
   color: #60a5fa;
