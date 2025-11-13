@@ -21,7 +21,7 @@
   </nav>
 
   <!-- Profil -->
-  <section class="profile-container">
+  <section class="profile-container fade-in">
     <div class="profile-header">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Photo de profil" class="profile-pic">
       <div class="user-info">
@@ -31,12 +31,12 @@
       </div>
     </div>
 
-    <div class="profile-details">
+    <div class="profile-details fade-in">
       <h2>Informations personnelles</h2>
       <div class="details-grid">
         <div class="detail">
           <span class="label">Nom complet :</span>
-          <span class="value" id="fullname"> El Fallah Ayoub</span>
+          <span class="value" id="fullname">El Fallah Ayoub</span>
         </div>
         <div class="detail">
           <span class="label">Université :</span>
@@ -48,15 +48,14 @@
         </div>
         <div class="detail">
           <span class="label">Niveau :</span>
-          <span class="value" id="level">3 eme année IL</span>
+          <span class="value" id="level">3ème année IL</span>
         </div>
       </div>
     </div>
 
-    <div class="projects-section">
+    <div class="projects-section fade-in">
       <h2>Mes projets</h2>
       <div class="projects-grid">
-
         <div class="project-card">
           <h3>Plateforme de tutorat étudiant</h3>
           <p>Fondateur</p>
@@ -68,21 +67,10 @@
           <p>Membre</p>
           <button onclick="openProject()">Voir</button>
         </div>
-
       </div>
     </div>
-
   </section>
 
-  <script>
-    function editProfile() {
-      alert("Fonctionnalité à venir : modification du profil !");
-    }
-
-    function openProject() {
-      window.location.href = "../project-details/project-details.html";
-    }
-  </script>
-
+  <script src="profile.js"></script>
 </body>
 </html>
