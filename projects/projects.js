@@ -1,16 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  gsap.from(".project-card", {
-    duration: 0.8,
-    y: 50,
-    opacity: 0,
-    stagger: 0.2,
-    ease: "power3.out"
+  const menuToggle = document.getElementById("menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+  const buttons = document.querySelectorAll(".join-btn");
+
+  // Menu burger mobile
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
   });
 
-  gsap.from(".left-side", {
-    duration: 1,
-    x: -80,
-    opacity: 0,
-    ease: "power3.out"
+  // Redirection vers page détail projet
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      window.location.href = "/projet_details/project-details.html";
+    });
   });
 });

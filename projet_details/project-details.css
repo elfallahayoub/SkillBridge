@@ -16,14 +16,13 @@ body {
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  padding: 15px 40px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(15px);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 40px;
   z-index: 1000;
 }
 
@@ -40,21 +39,19 @@ body {
   list-style: none;
   gap: 25px;
 }
-
 .navbar a {
   color: #fff;
   text-decoration: none;
   opacity: 0.8;
   transition: 0.3s;
 }
-
 .navbar a:hover,
 .navbar a.active {
   color: #60a5fa;
   opacity: 1;
 }
 
-/* ===== Section principale ===== */
+/* ===== Section ===== */
 .project-section {
   padding: 140px 20px 60px;
   display: flex;
@@ -67,10 +64,10 @@ body {
   border-radius: 1rem;
   max-width: 1000px;
   padding: 40px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
 }
 
-/* ===== En-tête du projet ===== */
+/* ===== En-tête ===== */
 .project-header {
   display: flex;
   align-items: center;
@@ -82,12 +79,10 @@ body {
   width: 70px;
   height: 70px;
 }
-
 .project-header h1 {
   font-size: 2rem;
   color: #60a5fa;
 }
-
 .tagline {
   font-size: 1rem;
   opacity: 0.8;
@@ -97,12 +92,10 @@ body {
 .project-description {
   margin: 25px 0;
 }
-
 .project-description h2 {
   color: #34d399;
   margin-bottom: 10px;
 }
-
 .project-description p {
   line-height: 1.6;
   opacity: 0.9;
@@ -112,7 +105,6 @@ body {
 .founder-section {
   margin: 40px 0;
 }
-
 .founder-card {
   display: flex;
   align-items: center;
@@ -121,7 +113,6 @@ body {
   border-radius: 1rem;
   padding: 20px;
 }
-
 .founder-img {
   width: 80px;
   height: 80px;
@@ -133,13 +124,11 @@ body {
   color: #34d399;
   margin-bottom: 20px;
 }
-
 .members-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 20px;
 }
-
 .member-card {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 1rem;
@@ -147,12 +136,10 @@ body {
   padding: 15px;
   transition: transform 0.3s ease;
 }
-
 .member-card:hover {
   transform: translateY(-5px);
   background: rgba(255, 255, 255, 0.1);
 }
-
 .member-card img {
   width: 70px;
   height: 70px;
@@ -167,7 +154,6 @@ body {
   gap: 15px;
   margin-top: 30px;
 }
-
 .join-btn,
 .back-btn {
   border: none;
@@ -177,21 +163,67 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .join-btn {
   background: linear-gradient(135deg, #60a5fa, #34d399);
   color: white;
 }
-
 .join-btn:hover {
   transform: scale(1.05);
 }
-
 .back-btn {
   background: rgba(255, 255, 255, 0.1);
   color: white;
 }
-
 .back-btn:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Effets d'apparition ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+  }
+
+  .project-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .founder-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container {
+    padding: 25px;
+  }
+
+  .project-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .join-btn,
+  .back-btn {
+    width: 100%;
+  }
 }
