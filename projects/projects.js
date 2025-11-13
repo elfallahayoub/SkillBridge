@@ -1,15 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const exploreBtn = document.querySelector(".cta-btn");
   const menuToggle = document.getElementById("menu-toggle");
   const navLinks = document.querySelector(".nav-links");
-
-  // Redirection vers la page des projets
-  exploreBtn.addEventListener("click", () => {
-    window.location.href = "/projects/projects.html";
-  });
+  const buttons = document.querySelectorAll(".join-btn");
 
   // Menu burger mobile
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
+  });
+
+  // Redirection vers page détail projet
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      window.location.href = "/projet_details/project-details.html";
+    });
   });
 });
