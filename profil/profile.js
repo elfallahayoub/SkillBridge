@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Déconnexion
   document.getElementById("logout").addEventListener("click", () => {
     localStorage.clear();
-    window.location.href = "login.html";
+    window.location.href = "/login/login.html";
   });
 
   // Exemple de chargement de projets
