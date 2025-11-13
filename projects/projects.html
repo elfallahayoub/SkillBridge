@@ -7,17 +7,23 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="projects.css">
+  <script src="projects.js" defer></script>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="logo">Skill<span>Bridge</span></div>
-    <ul>
+    <a href="/home/home.html" class="logo-link">
+      <h1>Skill<span>Bridge</span></h1>
+    </a>
+
+    <ul class="nav-links">
       <li><a href="/home/home.html">Accueil</a></li>
       <li><a href="/projects/projects.html" class="active">Projets</a></li>
-      <li><a href="/profile/profile.html">Profil</a></li>
+      <li><a href="/profil/profile.html">Profil</a></li>
     </ul>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
   </nav>
 
   <!-- Section principale -->
@@ -43,7 +49,7 @@
           <li>Sarah El Amrani</li>
         </ul>
         <p class="desc">Une plateforme pour connecter des tuteurs et des étudiants motivés.</p>
-        <button class="join-btn" onclick="openProject()">Voir le projet</button>
+        <button class="join-btn">Voir le projet</button>
       </div>
 
       <div class="project-card">
@@ -59,7 +65,7 @@
           <li>Omar Kadiri</li>
         </ul>
         <p class="desc">Gère les clubs, les événements et les adhésions de manière intuitive.</p>
-        <button class="join-btn" onclick="openProject()">Voir le projet</button>
+        <button class="join-btn">Voir le projet</button>
       </div>
 
       <div class="project-card">
@@ -73,7 +79,7 @@
           <li>Oussama Idrissi</li>
         </ul>
         <p class="desc">Expose tes projets et collabore avec d’autres étudiants talentueux.</p>
-        <button class="join-btn" onclick="openProject()">Voir le projet</button>
+        <button class="join-btn">Voir le projet</button>
       </div>
 
       <div class="project-card">
@@ -90,17 +96,11 @@
           <li>Hicham Lahmar</li>
         </ul>
         <p class="desc">Crée une IA qui aide les étudiants à réviser efficacement leurs cours.</p>
-        <button class="join-btn" onclick="openProject()">Voir le projet</button>
+        <button class="join-btn">Voir le projet</button>
       </div>
 
     </div>
   </section>
-
-  <script>
-    function openProject() {
-      window.location.href = "/projet_details/project-details.html";
-    }
-  </script>
 
 </body>
 </html>

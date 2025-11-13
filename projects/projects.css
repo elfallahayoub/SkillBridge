@@ -1,3 +1,4 @@
+/* ===== RESET ===== */
 * {
   margin: 0;
   padding: 0;
@@ -21,48 +22,55 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
+  padding: 15px 30px;
   z-index: 1000;
 }
 
-.logo {
-  font-size: 1.8rem;
+.logo-link h1 {
+  font-size: 2rem;
   font-weight: 800;
+  color: #fff;
 }
-.logo span {
+.logo-link span {
   color: #60a5fa;
 }
-.navbar ul {
+
+.nav-links {
   display: flex;
   list-style: none;
   gap: 25px;
 }
-.navbar a {
+
+.nav-links a {
   text-decoration: none;
   color: #fff;
   opacity: 0.8;
   font-weight: 500;
   transition: 0.3s;
 }
-.navbar a:hover,
-.navbar a.active {
+.nav-links a:hover,
+.nav-links a.active {
   opacity: 1;
   color: #60a5fa;
 }
 
-/* ===== Section Projects ===== */
+/* Burger menu */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #60a5fa;
+}
+
+/* ===== Projects Section ===== */
 .projects {
-  padding: 140px 80px;
+  padding: 130px 60px;
   text-align: center;
   min-height: 100vh;
 }
 
-.projects-header {
-  margin-bottom: 60px;
-}
-
 .projects-header h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   color: #60a5fa;
   margin-bottom: 1rem;
 }
@@ -81,18 +89,19 @@ body {
 /* ===== Cards ===== */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2.5rem;
   justify-items: center;
+  margin-top: 3rem;
 }
 
 .project-card {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
-  padding: 3rem;
-  border-radius: 1.5rem;
+  padding: 2.5rem;
+  border-radius: 1.2rem;
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
   transition: transform 0.3s ease, background 0.3s ease;
 }
@@ -103,7 +112,7 @@ body {
 }
 
 .project-card h3 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #60a5fa;
   margin-bottom: 10px;
 }
@@ -148,14 +157,54 @@ body {
   transition: transform 0.3s ease;
   width: 100%;
 }
-
 .join-btn:hover {
   transform: scale(1.05);
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .projects {
+    padding: 120px 30px;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .nav-links ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links.active {
+    display: block;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .project-card {
+    padding: 2rem;
+  }
+
+  .projects-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .projects-header p {
+    font-size: 1rem;
   }
 }
