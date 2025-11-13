@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkillBridge — Projets</title>
 
-  <link rel="stylesheet" href="projects.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js" defer></script>
+  <link rel="stylesheet" href="projects.css">
 </head>
 <body>
 
@@ -17,50 +16,91 @@
     <ul>
       <li><a href="/home/home.html">Accueil</a></li>
       <li><a href="/projects/projects.html" class="active">Projets</a></li>
-      <li><a href="#">Profil</a></li>
+      <li><a href="/profile/profile.html">Profil</a></li>
     </ul>
   </nav>
 
-  <!-- Section Projets -->
+  <!-- Section principale -->
   <section class="projects">
-    <h1>Projets disponibles</h1>
-    <div class="project-list">
+    <div class="projects-header">
+      <h1>Projets disponibles</h1>
+      <p>Découvre des projets étudiants innovants et collaboratifs.  
+        Rejoins une équipe, propose ton idée ou explore les fondateurs passionnés derrière chaque initiative.</p>
+      <img src="https://cdn-icons-png.flaticon.com/512/906/906343.png" alt="Project Illustration">
+    </div>
+
+    <div class="projects-grid">
 
       <div class="project-card">
         <h3>Plateforme de tutorat étudiant</h3>
         <p class="founder">👤 Fondateur : <strong>Sarah El Amrani</strong></p>
-        <p class="members">👥 Membres : 4</p>
-        <p class="desc">Un espace pour connecter des tuteurs et des étudiants motivés.</p>
-        <button class="join-btn">Détails</button>
+        <p class="date">📅 Créé le : <strong>12 Septembre 2025</strong></p>
+        <p class="members">👥 Membres (4) :</p>
+        <ul class="member-list">
+          <li>Amine Tazi</li>
+          <li>Salma Idrissi</li>
+          <li>Hassan Bouzid</li>
+          <li>Sarah El Amrani</li>
+        </ul>
+        <p class="desc">Une plateforme pour connecter des tuteurs et des étudiants motivés.</p>
+        <button class="join-btn" onclick="openProject()">Voir le projet</button>
       </div>
 
       <div class="project-card">
         <h3>Application de gestion de clubs universitaires</h3>
         <p class="founder">👤 Fondateur : <strong>Youssef Benali</strong></p>
-        <p class="members">👥 Membres : 5</p>
-        <p class="desc">Organise les événements, les réunions et les membres facilement.</p>
-        <button class="join-btn">Détails</button>
+        <p class="date">📅 Créé le : <strong>2 Octobre 2025</strong></p>
+        <p class="members">👥 Membres (5) :</p>
+        <ul class="member-list">
+          <li>Youssef Benali</li>
+          <li>Fatima Zahra Elhassani</li>
+          <li>Hamza Rouas</li>
+          <li>Layla Berrada</li>
+          <li>Omar Kadiri</li>
+        </ul>
+        <p class="desc">Gère les clubs, les événements et les adhésions de manière intuitive.</p>
+        <button class="join-btn" onclick="openProject()">Voir le projet</button>
       </div>
 
       <div class="project-card">
         <h3>Site de portfolio collaboratif</h3>
         <p class="founder">👤 Fondateur : <strong>Ayoub Elfallah</strong></p>
-        <p class="members">👥 Membres : 3</p>
+        <p class="date">📅 Créé le : <strong>21 Août 2025</strong></p>
+        <p class="members">👥 Membres (3) :</p>
+        <ul class="member-list">
+          <li>Ayoub Elfallah</li>
+          <li>Ikram Jabbari</li>
+          <li>Oussama Idrissi</li>
+        </ul>
         <p class="desc">Expose tes projets et collabore avec d’autres étudiants talentueux.</p>
-        <button class="join-btn">Détails</button>
+        <button class="join-btn" onclick="openProject()">Voir le projet</button>
       </div>
 
       <div class="project-card">
         <h3>Plateforme IA de révision</h3>
         <p class="founder">👤 Fondateur : <strong>Imane Lahlou</strong></p>
-        <p class="members">👥 Membres : 6</p>
-        <p class="desc">Crée une IA qui aide les étudiants à réviser efficacement.</p>
-        <button class="join-btn">Détails</button>
+        <p class="date">📅 Créé le : <strong>5 Novembre 2025</strong></p>
+        <p class="members">👥 Membres (6) :</p>
+        <ul class="member-list">
+          <li>Imane Lahlou</li>
+          <li>Yassine Tazi</li>
+          <li>Rania Azami</li>
+          <li>Omar El Kaoui</li>
+          <li>Chaima Bouhlal</li>
+          <li>Hicham Lahmar</li>
+        </ul>
+        <p class="desc">Crée une IA qui aide les étudiants à réviser efficacement leurs cours.</p>
+        <button class="join-btn" onclick="openProject()">Voir le projet</button>
       </div>
 
     </div>
   </section>
 
-  <script src="projects.js" defer></script>
+  <script>
+    function openProject() {
+      window.location.href = "/projet_details/project-details.html";
+    }
+  </script>
+
 </body>
 </html>
