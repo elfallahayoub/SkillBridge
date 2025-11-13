@@ -21,7 +21,7 @@
   </nav>
 
   <!-- Profil -->
-  <section class="profile-container fade-in">
+  <section class="profile-container">
     <div class="profile-header">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Photo de profil" class="profile-pic">
       <div class="user-info">
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="profile-details fade-in">
+    <div class="profile-details">
       <h2>Informations personnelles</h2>
       <div class="details-grid">
         <div class="detail">
@@ -48,13 +48,17 @@
         </div>
         <div class="detail">
           <span class="label">Niveau :</span>
-          <span class="value" id="level">3ème année IL</span>
+          <span class="value" id="level">3ᵉ année IL</span>
         </div>
       </div>
     </div>
 
-    <div class="projects-section fade-in">
-      <h2>Mes projets</h2>
+    <div class="projects-section">
+      <div class="projects-header">
+        <h2>Mes projets</h2>
+        <button class="create-project-btn" onclick="createProject()">+ Créer un projet</button>
+      </div>
+
       <div class="projects-grid">
         <div class="project-card">
           <h3>Plateforme de tutorat étudiant</h3>
@@ -71,6 +75,19 @@
     </div>
   </section>
 
-  <script src="profile.js"></script>
+  <script>
+    function editProfile() {
+      alert("Fonctionnalité à venir : modification du profil !");
+    }
+
+    function openProject() {
+      window.location.href = "/projet_details/project-details.html";
+    }
+
+    function createProject() {
+      window.location.href = "/create_project/create-project.html";
+    }
+  </script>
+
 </body>
 </html>
