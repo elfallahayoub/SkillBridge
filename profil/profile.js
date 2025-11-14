@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Animation d’apparition fluide
+  // Animation d’apparition
   const elements = document.querySelectorAll(".fade-in");
   const showOnScroll = () => {
     elements.forEach((el) => {
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add("visible");
-      }
+      if (rect.top < window.innerHeight - 100) el.classList.add("visible");
     });
   };
   window.addEventListener("scroll", showOnScroll);
@@ -16,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.editProfile = () => {
     alert("Fonctionnalité à venir : modification du profil !");
   };
-
   window.openProject = () => {
     window.location.href = "../project-details/project-details.html";
   };
