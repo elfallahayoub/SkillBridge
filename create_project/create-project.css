@@ -27,13 +27,12 @@ body {
   z-index: 1000;
 }
 
-.logo {
-  font-size: 1.8rem;
+.logo-link h1 {
+  font-size: 2rem;
   font-weight: 800;
   color: #fff;
 }
-
-.logo span {
+.logo-link span {
   color: #60a5fa;
 }
 
@@ -90,6 +89,7 @@ body {
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+  color: black;
 }
 
 label {
@@ -103,7 +103,7 @@ input, textarea, select {
   border: none;
   border-radius: 10px;
   padding: 12px 15px;
-  color: #fff;
+  color:black;
   font-size: 1rem;
   outline: none;
   transition: all 0.3s;
