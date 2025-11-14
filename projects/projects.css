@@ -64,9 +64,9 @@ body {
 
 /* ===== Projects Section ===== */
 .projects {
-  padding: 130px 60px;
-  text-align: center;
-  min-height: 100vh;
+   padding: 130px 60px; 
+   text-align: center; 
+  /* min-height: 100vh; */
 }
 
 .projects-header h1 {
