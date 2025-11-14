@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer un projet — SkillBridge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="create-project.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Skill<span>Bridge</span></div>
+    <ul>
+      <li><a href="/home/home.html">Accueil</a></li>
+      <li><a href="/projects/projects.html">Projets</a></li>
+      <li><a href="/profile/profile.html">Profil</a></li>
+    </ul>
+  </nav>
+
+  <!-- Formulaire -->
+  <section class="form-section">
+    <div class="form-container">
+      <h1>Créer un nouveau projet 🚀</h1>
+      <p class="subtitle">Décris ton idée et invite d’autres étudiants à collaborer avec toi.</p>
+
+      <form id="createProjectForm">
+        <div class="form-group">
+          <label for="title">Nom du projet</label>
+          <input type="text" id="title" name="title" placeholder="Ex : Plateforme de tutorat étudiant" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="5" placeholder="Décris ton projet en quelques lignes..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Catégorie</label>
+          <select id="category" name="category" required>
+            <option value="">-- Choisir une catégorie --</option>
+            <option value="Développement web">Développement web</option>
+            <option value="IA & Data Science">IA & Data Science</option>
+            <option value="Design & UI/UX">Design & UI/UX</option>
+            <option value="Jeux vidéo">Jeux vidéo</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="members">Membres recherchés</label>
+          <input type="text" id="members" name="members" placeholder="Ex : 1 designer, 2 développeurs back-end">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="publish-btn">Publier le projet</button>
+          <button type="button" class="cancel-btn" onclick="window.history.back()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById("createProjectForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("🎉 Projet créé avec succès !");
+      window.location.href = "/projects/projects.html";
+    });
+  </script>
+
+</body>
+</html>
