@@ -1,0 +1,229 @@
+/* ===== Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  z-index: 1000;
+}
+
+.logo-link h1 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #fff;
+}
+.logo-link span {
+  color: #60a5fa;
+}
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.navbar a:hover,
+.navbar a.active {
+  color: #60a5fa;
+  opacity: 1;
+}
+
+/* ===== Section ===== */
+.project-section {
+  padding: 140px 20px 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  max-width: 1000px;
+  padding: 40px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+}
+
+/* ===== En-tête ===== */
+.project-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.project-icon {
+  width: 70px;
+  height: 70px;
+}
+.project-header h1 {
+  font-size: 2rem;
+  color: #60a5fa;
+}
+.tagline {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* ===== Description ===== */
+.project-description {
+  margin: 25px 0;
+}
+.project-description h2 {
+  color: #34d399;
+  margin-bottom: 10px;
+}
+.project-description p {
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* ===== Fondateur ===== */
+.founder-section {
+  margin: 40px 0;
+}
+.founder-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 20px;
+}
+.founder-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+/* ===== Membres ===== */
+.members-section h2 {
+  color: #34d399;
+  margin-bottom: 20px;
+}
+.members-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+.member-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.3s ease;
+}
+.member-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+.member-card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* ===== Boutons ===== */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+.join-btn,
+.back-btn {
+  border: none;
+  padding: 12px 25px;
+  border-radius: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.join-btn {
+  background: linear-gradient(135deg, #60a5fa, #34d399);
+  color: white;
+}
+.join-btn:hover {
+  transform: scale(1.05);
+}
+.back-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Effets d'apparition ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+  }
+
+  .project-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .founder-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container {
+    padding: 25px;
+  }
+
+  .project-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .join-btn,
+  .back-btn {
+    width: 100%;
+  }
+}

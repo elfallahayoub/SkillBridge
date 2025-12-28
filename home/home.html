@@ -6,69 +6,50 @@
   <title>SkillBridge — Accueil</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="home.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="home.js" defer></script>
 </head>
 <body>
 
   <!-- Navbar -->
-  <header class="navbar">
-    <div  class="logo">Skill<span>Bridge</span></div>
-    <nav>
-      <ul>
-        <li><a href="#" class="active">Accueil</a></li>
-        <li><a href="/projects/projects.html">Projets</a></li>
-        <li><a href="#">Équipe</a></li>
-        <li><a href="#">Profil</a></li>
-      </ul>
-    </nav>
-  </header>
+<header class="navbar">
+    <a href="/index.html" class="logo-link">
+      <h1>Skill<span>Bridge</span></h1>
+    </a>
+  <nav class="nav-links">
+    <ul>
+      <li><a href="#" class="active">Accueil</a></li>
+      <li><a href="/projects/projects.html">Projets</a></li>
+      <li><a href="/profil/profile.html">Profil</a></li>
+    </ul>
+  </nav>
+  <div class="menu-toggle" id="menu-toggle">☰</div>
+</header>
 
-  <!-- Section d’accueil -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Bienvenue sur <span>SkillBridge</span> 👋</h1>
-      <p>Collabore avec les meilleurs étudiants et construis ton avenir dès aujourd’hui.</p>
-      <button class="cta-btn">Explorer les projets</button>
-    </div>
-  </section>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenue sur <span>SkillBridge</span> 👋</h1>
+    <p>Collabore avec les meilleurs étudiants et construis ton avenir dès aujourd’hui.</p>
+    <button class="cta-btn">Explorer les projets</button>
+  </div>
 
-  <!-- Cartes principales -->
-  <section class="cards">
+  <div class="cards">
     <div class="card">
       <h3>Créer un projet</h3>
-      <p>Lance ton idée et trouve des collaborateurs passionnés.
-
-      </p>
+      <p>Lance ton idée et trouve des collaborateurs passionnés.</p>
     </div>
-    
+
     <div class="card">
       <h3>Rejoindre une équipe</h3>
-      <p>Découvre des projets qui correspondent à tes compétences.</p>
+      <p>Découvre des projets correspondant à tes compétences.</p>
     </div>
 
     <div class="card">
       <h3>Profil étudiant</h3>
       <p>Présente tes talents et fais-toi remarquer par la communauté.</p>
     </div>
-  </section>
-
-  <!-- Messenger intégré -->
-  <div class="chat-container">
-    <button class="chat-toggle">💬</button>
-    <div class="chat-box">
-      <div class="chat-header">Messenger SkillBridge</div>
-      <div class="chat-body">
-        <div class="msg incoming">Salut ! Tu travailles sur quel projet ?</div>
-        <div class="msg outgoing">Hey 😄 Je bosse sur une app IA collaborative !</div>
-        <div class="msg incoming">Super ! On pourrait échanger des idées !</div>
-      </div>
-      <div class="chat-input">
-        <input type="text" placeholder="Écris un message...">
-        <button>Envoyer</button>
-      </div>
-    </div>
   </div>
+</section>
+
 
 </body>
 </html>

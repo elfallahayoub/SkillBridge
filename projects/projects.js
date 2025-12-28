@@ -1,23 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Navbar scroll effect
-  const navbar = document.querySelector(".navbar");
-  window.addEventListener("scroll", () => {
-    navbar.classList.toggle("scrolled", window.scrollY > 30);
+  const menuToggle = document.getElementById("menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+  const buttons = document.querySelectorAll(".join-btn");
+
+  // Menu burger mobile
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
   });
 
-  // GSAP Animations
-  if (window.gsap) {
-    gsap.from(".project-card", { opacity: 0, y: 40, duration: 0.8, stagger: 0.2 });
-  }
-
-  // Join button click event
-  const buttons = document.querySelectorAll(".join-btn");
+  // Redirection vers page détail projet
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
-      gsap.to(btn, { scale: 1.1, backgroundColor: "#34d399", duration: 0.3 });
-      setTimeout(() => {
-        alert("🎉 Vous avez rejoint ce projet avec succès !");
-      }, 200);
+      window.location.href = "/projet_details/project-details.html";
     });
   });
 });
