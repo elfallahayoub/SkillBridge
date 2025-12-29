@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user")); 
 
   // If not logged in → redirect
   if (!user) {
@@ -23,15 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
     user.university || "ESISA";
 
   document.getElementById("numEtudiant").textContent =
-    user.nom || "nom";
+    user.numEtudiant || "*****";
 
   document.getElementById("level").textContent =
-    user.level || "3ᵉ année IL";
+    user.level || "Vide";
 
 
-  /* ============================
-     ✨ ANIMATIONS (UNCHANGED)
-  ============================ */
+
   const elements = document.querySelectorAll(".fade-in");
 
   const showOnScroll = () => {
@@ -47,9 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showOnScroll();
 
 
-  /* ============================
-     🔘 BUTTONS (UNCHANGED)
-  ============================ */
+
   window.editProfile = () => {
     alert("Fonctionnalité à venir : modification du profil !");
   };
