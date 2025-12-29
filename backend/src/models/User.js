@@ -9,14 +9,15 @@ const userSchema = new mongoose.Schema(
     },
     prenom: {
       type: String,
-      required: true,
+      required: false,
+      default:"to_fill",
       trim: true
     },
-    numeroEtudiant: {
+      numeroEtudiant: {
       type: String,
       required: true,
       unique: true
-    },
+    }, 
     email: {
       type: String,
       required: true,
@@ -31,6 +32,7 @@ const userSchema = new mongoose.Schema(
     },
     numeroTele: {
       type: String,
+      default:"to_fill",
       required: false
     }
   },

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     togglePwd.textContent = type === "text" ? "🙈" : "👁️";
   });
 
-  // Validation
+  // Email validation
   function validateEmail(v) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   }
@@ -29,68 +29,120 @@ document.addEventListener("DOMContentLoaded", () => {
     input.classList.toggle("invalid", !!msg);
   }
 
-  // Soumission du formulaire
+  function clearErrors() {
+    document.querySelectorAll(".error").forEach(e => {
+      e.textContent = "";
+      e.style.visibility = "hidden";
+    });
+  }
+
+  // Form submit
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    clearErrors();
+
     let valid = true;
 
     if (!validateEmail(email.value.trim())) {
       setError(email, "Email invalide.");
       valid = false;
-    } else setError(email, "");
+    }
 
     if (password.value.trim().length < 6) {
       setError(password, "Min. 6 caractères.");
       valid = false;
-    } else setError(password, "");
+    }
 
     if (!valid) return;
-    simulateLogin();
+
+    login();
   });
 
-  // Simulation de connexion + redirection vers home
-  function simulateLogin() {
+  // 🔐 REAL LOGIN WITH BACKEND
+  async function login() {
     const btn = form.querySelector(".btn-primary");
     btn.disabled = true;
     btn.textContent = "Connexion...";
 
-    if (window.gsap) {
-      gsap.timeline()
-        .to("#page-wipe", { opacity: 1, scaleX: 1, duration: 0.45, ease: "power3.inOut" })
-        .to("#page-wipe", {
-          scaleX: 0,
-          transformOrigin: "right",
-          duration: 0.55,
-          ease: "power3.inOut",
-          delay: 0.1,
-          onComplete: () => {
-            // ✅ Sauvegarde temporaire utilisateur
-            localStorage.setItem("userEmail", email.value);
-            window.location.href = "../home/home.html";
-          }
-        });
+    try {
+      const res = await fetch("http://localhost:4001/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email.value.trim(),
+          password: password.value.trim()
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(password, data.message || "Email ou mot de passe incorrect");
+        btn.disabled = false;
+        btn.textContent = "Connexion";
+        return;
+      }
+
+      // ✅ Save authenticated user
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // 🎬 Keep your GSAP animation
+      if (window.gsap) {
+        gsap.timeline()
+          .to("#page-wipe", {
+            opacity: 1,
+            scaleX: 1,
+            duration: 0.45,
+            ease: "power3.inOut"
+          })
+          .to("#page-wipe", {
+            scaleX: 0,
+            transformOrigin: "right",
+            duration: 0.55,
+            ease: "power3.inOut",
+            delay: 0.1,
+            onComplete: () => {
+              window.location.href = "../home/home.html";
+            }
+          });
+      }
+
+    } catch (err) {
+      console.error(err);
+      setError(password, "Erreur serveur");
+      btn.disabled = false;
+      btn.textContent = "Connexion";
     }
   }
 
-  // Animation vers Inscription
+  // 👉 Go to signup with animation
   if (toSignup) {
     toSignup.addEventListener("click", (e) => {
       e.preventDefault();
       if (window.gsap) {
         gsap.timeline()
-          .to("#page-wipe", { opacity: 1, scaleX: 1, duration: 0.42, ease: "power3.inOut" })
+          .to("#page-wipe", {
+            opacity: 1,
+            scaleX: 1,
+            duration: 0.42,
+            ease: "power3.inOut"
+          })
           .to("#page-wipe", {
             scaleX: 0,
             transformOrigin: "right",
             duration: 0.45,
             delay: 0.12,
-            onComplete: () => window.location.href = toSignup.href
+            onComplete: () => {
+              window.location.href = toSignup.href;
+            }
           });
       }
     });
   }
 
-  // Effets d'entrée
+  // ✨ Entrance animations
   if (window.gsap) {
     gsap.from(".glass-card", { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" });
     gsap.from(".left-panel .hero-copy h2", { opacity: 0, x: -20, duration: 0.9, delay: 0.1 });
