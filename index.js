@@ -502,7 +502,7 @@ console.log('%cConnectez-vous avec des étudiants passionnés', 'color: #0a1515;
         const current = document.documentElement.getAttribute('data-theme') || 'light';
         const next = current === 'dark' ? 'light' : 'dark';
         applyPalette(next);
-        //localStorage.setItem(storageKey, next);
+        localStorage.setItem(storageKey, next);
       });
     }
 
@@ -512,7 +512,7 @@ console.log('%cConnectez-vous avec des étudiants passionnés', 'color: #0a1515;
       picker.addEventListener('input', (e) => {
         const v = e.target.value;
         setAccent(v);
-        //localStorage.setItem(accentKey, v);
+        localStorage.setItem(accentKey, v);
       });
     }
 

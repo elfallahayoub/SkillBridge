@@ -11,6 +11,8 @@ router.get("/getAllUsers", userController.getAllUsers);
 // Update user
 router.put("/modifierUser/:id", userController.modifierUser);
 
+//login
+router.post("/login", userController.loginUser);
 
 
 // Delete user
