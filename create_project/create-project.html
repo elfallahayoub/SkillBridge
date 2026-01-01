@@ -64,11 +64,93 @@
   </section>
 
   <script>
-    document.getElementById("createProjectForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("🎉 Projet créé avec succès !");
-      window.location.href = "/projects/projects.html";
-    });
+    (function(){
+      const API_BASE = 'http://localhost:4001';
+      const form = document.getElementById('createProjectForm');
+      const submitBtn = form.querySelector('.publish-btn');
+
+      // require login: get current user from localStorage
+      const currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+      if (!currentUser) {
+        // redirect to login if not authenticated
+        window.location.href = '/login/login.html';
+        return;
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Publication...';
+
+        const title = document.getElementById('title').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const category = document.getElementById('category').value;
+        const membersInput = document.getElementById('members').value.trim();
+
+        // Normalize members: allow CSV or JSON array or single identifier
+        let members = membersInput;
+        if (!membersInput) members = [];
+        else {
+          try {
+            const parsed = JSON.parse(membersInput);
+            if (Array.isArray(parsed)) members = parsed;
+          } catch (err) {
+            if (membersInput.includes(',')) members = membersInput.split(',').map(s => s.trim()).filter(Boolean);
+          }
+        }
+
+        // Prefer sending an owner identifier that backend can resolve: use email when available
+        const ownerIdentifier = currentUser.email || currentUser.id || currentUser.numeroEtudiant || currentUser._id;
+
+        // Basic client-side validation
+        if (!title || !description || !category) {
+          alert('Veuillez renseigner le titre, la description et la catégorie.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Publier le projet';
+          return;
+        }
+
+        const body = {
+          title,
+          description,
+          category,
+          members,
+          owner: ownerIdentifier
+        };
+
+        try {
+          const res = await fetch(`${API_BASE}/api/projects/createProject`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            const msg = data.message || data.error || res.status;
+            alert('Erreur lors de la création du projet: ' + msg);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Publier le projet';
+            return;
+          }
+
+          // backend returns populated project with _id
+          const projectId = data._id || (data.project && data.project._id);
+          alert('🎉 Projet créé avec succès !');
+          if (projectId) {
+            window.location.href = `/projet_details/project-details.html?id=${projectId}`;
+          } else {
+            window.location.href = '/projects/projects.html';
+          }
+        } catch (err) {
+          console.error('Create project failed', err);
+          alert('Impossible de créer le projet pour le moment.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Publier le projet';
+        }
+      });
+    })();
   </script>
 
 </body>
