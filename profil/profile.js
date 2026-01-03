@@ -8,12 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "../login/login.html";
     return;
   }
+  function goToModify() {
+  window.location.href = "../modify/modify.html";
+}
+
 
   // Inject user data into profile
   document.getElementById("username").textContent =
     `${user.prenom} ${user.nom}`;
 
-  document.getElementById("user-email").textContent =
+  document.getElementById("email").textContent =
     user.email;
 
   document.getElementById("fullname").textContent =
@@ -27,6 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("level").textContent =
     user.level || "Vide";
+
+  document.getElementById("specialite").textContent = 
+    user.specialite || "vide";
 
 
 

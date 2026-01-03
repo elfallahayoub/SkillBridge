@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       match: [/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i, "Email invalide"]
     },
+    specialite:{
+      type: String,
+      required : false,
+      unique : false,
+      default : "Ingenierie Logiciel"
+    },
     password: {
       type: String,
       required: true,
@@ -32,8 +38,18 @@ const userSchema = new mongoose.Schema(
     },
     numeroTele: {
       type: String,
-      default:"to_fill",
+      default:"0600000000",
       required: false
+    },
+    niveau: {
+      type: String,
+      required : false,
+      default: "3eme annee"
+    },
+    photo: {
+      type: String, // URL de la photo
+      required : false,
+      default: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
     }
   },
   {

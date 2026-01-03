@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modifier le profil | SkillBridge</title>
+  <link rel="stylesheet" href="modify.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">Skill<span>Bridge</span></div>
+  <ul class="nav-links">
+    <li><a href="../home/home.html">Accueil</a></li>
+    <li><a href="#">Fonctionnalités</a></li>
+    <li><a href="#">À propos</a></li>
+  </ul>
+  <a class="nav-btn" href="../profil/profile.html">Profil</a>
+</nav>
+
+<section class="modify-container">
+  <div class="modify-card">
+
+    <h1>Modifier votre profil</h1>
+    <p>Actualisez vos informations personnelles</p>
+
+    <!-- PHOTO -->
+    <div class="photo-section">
+      <img id="photoPreview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+      <input type="file" id="photo" accept="image/*">
+    </div>
+
+    <!-- FORM -->
+    <form id="modifyForm" class="grid-form">
+
+      <div class="field">
+        <label>Nom</label>
+        <input type="text" id="nom" required>
+      </div>
+
+      <div class="field">
+        <label>Prénom</label>
+        <input type="text" id="prenom" required>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="email" disabled>
+      </div>
+
+      <div class="field">
+        <label>Numéro de téléphone</label>
+        <input type="tel" id="numeroTele">
+      </div>
+
+      <div class="field">
+        <label>Spécialité</label>
+        <input type="text" id="specialite">
+      </div>
+
+      <div class="field">
+        <label>Niveau</label>
+        <input type="text" id="niveau">
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="save-btn">Enregistrer</button>
+        <a href="../profil/profile.html" class="cancel-btn">Annuler</a>
+      </div>
+
+    </form>
+
+  </div>
+</section>
+
+<script src="modify.js"></script>
+</body>
+</html>
