@@ -27,10 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
     user.university || "ESISA";
 
   document.getElementById("numEtudiant").textContent =
-    user.numEtudiant || "*****";
+    user.numeroEtudiant || "*****";
 
   document.getElementById("level").textContent =
-    user.level || "Vide";
+    user.niveau || "level";
 
   document.getElementById("specialite").textContent = 
     user.specialite || "vide";

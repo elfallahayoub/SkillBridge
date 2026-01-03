@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       localStorage.setItem("user", JSON.stringify(data.user));
       alert("Profil mis à jour !");
-      window.location.href = "../profile/profile.html";
+      window.location.href = "../profil/profile.html";
 
     } catch (err) {
       console.error(err);

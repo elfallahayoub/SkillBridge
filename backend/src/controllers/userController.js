@@ -128,6 +128,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 
+
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -144,17 +145,18 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    const userSafe = user.toObject();
+
+    //dont send password
+    delete userSafe.password;
+
     res.status(200).json({
       message: "Login successful",
-      user: {
-        id: user._id,
-        nom: user.nom,
-        prenom: user.prenom,
-        email: user.email
-      }
+      user: userSafe
     });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Erreur serveur" });
   }
 };
