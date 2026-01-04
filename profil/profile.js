@@ -35,6 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("specialite").textContent = 
     user.specialite || "vide";
 
+  const profilePhoto = document.getElementById("profilePhoto");
+
+  if (user.photo) {
+  profilePhoto.src = `http://localhost:4001${user.photo}`;
+  }
+
+  const profilePic = document.querySelector(".profile-pic");
+
+  profilePic.src = user.photo
+    ? "http://localhost:4001" + user.photo
+    : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+
 
 
   const elements = document.querySelectorAll(".fade-in");
@@ -52,10 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
   showOnScroll();
 
 
-
+/* 
   window.editProfile = () => {
     alert("Fonctionnalité à venir : modification du profil !");
-  };
+  }; */
 
   window.openProject = () => {
     window.location.href = "../project-details/project-details.html";

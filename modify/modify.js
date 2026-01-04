@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 🔹 Inputs
   const modifyForm = document.getElementById("modifyForm");
   const nom = document.getElementById("nom");
   const prenom = document.getElementById("prenom");
@@ -14,21 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const specialite = document.getElementById("specialite");
   const niveau = document.getElementById("niveau");
 
-  // 🔹 Photo
   const photoInput = document.getElementById("photo");
   const photoPreview = document.getElementById("photoPreview");
 
-  // 🔹 Pré-remplissage
+  // Pré-remplissage
   nom.value = user.nom || "";
   prenom.value = user.prenom || "";
   email.value = user.email || "";
-  email.disabled = true; // sécurité
+  email.disabled = true;
   numeroTele.value = user.numeroTele || "";
   specialite.value = user.specialite || "";
   niveau.value = user.niveau || "";
-  photoPreview.src = user.photo || photoPreview.src;
+  if (user.photo) photoPreview.src = user.photo? `http://localhost:4001${user.photo}`: photoPreview.src;
 
-  // 🔹 Preview photo
+  // Preview image
   photoInput.addEventListener("change", () => {
     const file = photoInput.files[0];
     if (!file) return;
@@ -46,43 +44,34 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsDataURL(file);
   });
 
-  // 🔹 Submit
+  // Submit avec FormData
   modifyForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const updatedUser = {
-      nom: nom.value,
-      prenom: prenom.value,
-      numeroTele: numeroTele.value,
-      specialite: specialite.value,
-      niveau: niveau.value,
-      photo: photoPreview.src
-    };
+  const formData = new FormData();
 
-    try {
-      const res = await fetch(
-        `http://localhost:4001/api/users/updateUser/${user._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedUser)
-        }
-      );
+  formData.append("nom", nom.value);
+  formData.append("prenom", prenom.value);
+  formData.append("numeroTele", numeroTele.value);
+  formData.append("specialite", specialite.value);
+  formData.append("niveau", niveau.value);
 
-      const data = await res.json();
+  if (photoInput.files[0]) {
+    formData.append("photo", photoInput.files[0]);
+  }
 
-      if (!res.ok) {
-        alert(data.message || "Erreur de mise à jour");
-        return;
-      }
-
-      localStorage.setItem("user", JSON.stringify(data.user));
-      alert("Profil mis à jour !");
-      window.location.href = "../profil/profile.html";
-
-    } catch (err) {
-      console.error(err);
-      alert("Erreur serveur");
+  const res = await fetch(
+    `http://localhost:4001/api/users/updateUser/${user._id}`,
+    {
+      method: "PUT",
+      body: formData 
     }
-  });
+  );
+
+  const data = await res.json();
+
+  localStorage.setItem("user", JSON.stringify(data.user));
+  window.location.href = "../profil/profile.html";
+});
+
 });
