@@ -57,7 +57,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-  //update 
+ //update 
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -68,21 +68,26 @@ exports.updateUser = async (req, res) => {
       numeroTele,
       specialite,
       niveau,
-      photo,
-      numeroEtudiant
+      numeroEtudiant 
     } = req.body;
+
+    const updateData = {
+      nom,
+      prenom,
+      numeroTele,
+      specialite,
+      niveau,
+      numeroEtudiant
+    };
+
+    // ✅ Si une nouvelle photo est envoyée
+    if (req.file) {
+      updateData.photo = '/uploads/photos/1767464325346-photo.jpg';
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      {
-        nom,
-        prenom,
-        numeroTele,
-        specialite,
-        niveau,
-        photo,
-        numeroEtudiant
-      },
+      updateData,
       { new: true }
     ).select("-password");
 
@@ -100,7 +105,7 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
-  
+
 // ✅ Delete user
 exports.deleteUser = async (req, res) => {
   try {
