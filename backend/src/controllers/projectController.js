@@ -4,9 +4,8 @@ const mongoose = require("mongoose");
 const Project = require("../models/Project");
 const User = require("../models/User");
 
-/**
- * Résoudre un identifiant utilisateur en ObjectId
- */
+/* ================= UTILITIES ================= */
+
 const resolveUserIdentifier = async (identifier) => {
   if (!identifier) return null;
 
@@ -20,78 +19,52 @@ const resolveUserIdentifier = async (identifier) => {
   user = await User.findOne({ email: identifier }).select("_id");
   if (user) return user._id;
 
-  const sep = identifier.includes("-")
-    ? "-"
-    : identifier.includes(" ")
-    ? " "
-    : null;
-
-  if (sep) {
-    const [nom, prenom] = identifier.split(sep).map(s => s.trim());
-    if (nom && prenom) {
-      user = await User.findOne({ nom, prenom }).select("_id");
-      if (user) return user._id;
-    }
-  }
-
   return null;
 };
 
-/**
- * Normaliser l'entrée members en tableau
- */
 const normalizeMembersInput = (members) => {
   if (!members) return [];
-
   if (Array.isArray(members)) return members;
-
   if (typeof members === "string") {
-    try {
-      const parsed = JSON.parse(members);
-      if (Array.isArray(parsed)) return parsed;
-    } catch (e) {}
-
     return members.split(",").map(m => m.trim()).filter(Boolean);
   }
-
   return [members];
 };
 
 /* ================= CREATE PROJECT ================= */
 exports.createProject = async (req, res) => {
   try {
-    const data = { ...req.body };
+    const { title, description, category, owner, members } = req.body;
 
-    if (!data.title || !data.description || !data.category) {
+    if (!title || !description || !category) {
       return res.status(400).json({
         message: "title, description and category are required"
       });
     }
 
+    // Owner
+    let ownerId = null;
+    if (owner) {
+      ownerId = await resolveUserIdentifier(owner);
+    }
+
     // Members
-    const membersRaw = normalizeMembersInput(data.members);
-    const resolvedMembers = [];
-    const unresolved = [];
+    const membersRaw = normalizeMembersInput(members);
+    const membersIds = [];
 
     for (const m of membersRaw) {
       const id = await resolveUserIdentifier(m);
-      if (id) resolvedMembers.push(id);
-      else unresolved.push(m);
+      if (id) membersIds.push(id);
     }
 
-    data.members = resolvedMembers;
-    if (unresolved.length > 0) {
-      data.membersStrings = unresolved;
-    }
+    const project = new Project({
+      title,
+      description,
+      category,
+      owner: ownerId,
+      members: membersIds
+    });
 
-    // Owner
-    if (data.owner) {
-      const ownerId = await resolveUserIdentifier(data.owner);
-      if (ownerId) data.owner = ownerId;
-      else delete data.owner;
-    }
-
-    const project = new Project(data);
     await project.save();
 
     const populatedProject = await Project.findById(project._id)
@@ -145,41 +118,31 @@ exports.getProjectById = async (req, res) => {
 /* ================= UPDATE PROJECT ================= */
 exports.updateProject = async (req, res) => {
   try {
+    const { id } = req.params;
     const updates = { ...req.body };
-
-    if (updates.members) {
-      const membersRaw = normalizeMembersInput(updates.members);
-      const resolved = [];
-      const unresolved = [];
-
-      for (const m of membersRaw) {
-        const id = await resolveUserIdentifier(m);
-        if (id) resolved.push(id);
-        else unresolved.push(m);
-      }
-
-      if (resolved.length === 0) {
-        return res.status(400).json({
-          message: "No valid members found",
-          unresolved
-        });
-      }
-
-      updates.members = resolved;
-    }
 
     if (updates.owner) {
       const ownerId = await resolveUserIdentifier(updates.owner);
       if (!ownerId) {
-        return res.status(400).json({
-          message: "Owner could not be resolved"
-        });
+        return res.status(400).json({ message: "Invalid owner" });
       }
       updates.owner = ownerId;
     }
 
+    if (updates.members) {
+      const membersRaw = normalizeMembersInput(updates.members);
+      const membersIds = [];
+
+      for (const m of membersRaw) {
+        const id = await resolveUserIdentifier(m);
+        if (id) membersIds.push(id);
+      }
+
+      updates.members = membersIds;
+    }
+
     const updatedProject = await Project.findByIdAndUpdate(
-      req.params.id,
+      id,
       updates,
       { new: true }
     )
@@ -196,14 +159,17 @@ exports.updateProject = async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Erreur serveur" });
   }
 };
 
 /* ================= DELETE PROJECT ================= */
 exports.deleteProject = async (req, res) => {
   try {
-    const deletedProject = await Project.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+
+    const deletedProject = await Project.findByIdAndDelete(id);
 
     if (!deletedProject) {
       return res.status(404).json({ message: "Project not found" });
@@ -215,20 +181,9 @@ exports.deleteProject = async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-/* ================= DELETE ALL PROJECTS ================= */
-exports.deleteAllProjects = async (req, res) => {
-  try {
-    const result = await Project.deleteMany({});
-    res.status(200).json({
-      message: "All projects deleted",
-      deletedCount: result.deletedCount
+    res.status(500).json({
+      message: "Error deleting project",
+      error: err.message
     });
-
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
 };
