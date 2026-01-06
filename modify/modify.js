@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Submit avec FormData
-  modifyForm.addEventListener("submit", async (e) => {
+   modifyForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData();
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `http://localhost:4001/api/users/updateUser/${user._id}`,
     {
       method: "PUT",
-      body: formData 
+      body: formData // ⚠️ PAS headers JSON
     }
   );
 
@@ -73,5 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
   localStorage.setItem("user", JSON.stringify(data.user));
   window.location.href = "../profil/profile.html";
 });
+
 
 });

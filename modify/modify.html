@@ -26,13 +26,16 @@
 
     <!-- PHOTO -->
     <div class="photo-section">
-      <img id="photoPreview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+      <img
+        id="profilePhoto"
+        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+        alt="Photo de profil"
+        class="profile-pic">
       <input type="file" id="photo" accept="image/*">
     </div>
 
     <!-- FORM -->
-    <form id="modifyForm" class="grid-form">
-
+    <form id="modifyForm" class="grid-form" enctype="multipart/form-data">
       <div class="field">
         <label>Nom</label>
         <input type="text" id="nom" required>

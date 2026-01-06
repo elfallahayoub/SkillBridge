@@ -13,6 +13,7 @@ router.get("/getAllUsers", userController.getAllUsers);
 
 router.put("/updateUser/:id",upload.single("photo"),userController.updateUser);
 // Update user
+
 //router.put("/modifierUser/:id", userController.modifierUser);
 
 //login
