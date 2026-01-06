@@ -113,21 +113,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Disable/hide join button for owner or existing members
       if (joinBtn) {
-        const ownerIdRaw = project.owner && (project.owner._id || project.owner);
-        const ownerIdStr = ownerIdRaw ? ownerIdRaw.toString() : null;
-        const currentUserIdStr = currentUser && currentUser._id ? currentUser._id.toString() : null;
+        // Build identifier candidates from current user (support _id, numeroEtudiant, email)
+        const getUserCandidates = (u) => {
+          if (!u) return [];
+          const cand = [];
+          if (u._id) cand.push(u._id.toString());
+          if (u.numeroEtudiant) cand.push(String(u.numeroEtudiant));
+          if (u.email) cand.push(String(u.email).toLowerCase());
+          return cand.filter(Boolean);
+        };
 
-        const isOwner = currentUserIdStr && ownerIdStr && currentUserIdStr === ownerIdStr;
-        const isMember = currentUserIdStr && Array.isArray(project.members) && project.members.some(m => {
-          const mid = (m && (m._id || m)).toString();
-          return mid === currentUserIdStr;
-        });
+        const currentCandidates = getUserCandidates(currentUser);
+
+        // Build owner candidates (owner may be populated object or id string)
+        const ownerCandidates = (() => {
+          const o = project.owner;
+          if (!o) return [];
+          if (typeof o === 'string') return [o.toString()];
+          const arr = [];
+          if (o._id) arr.push(o._id.toString());
+          if (o.numeroEtudiant) arr.push(String(o.numeroEtudiant));
+          if (o.email) arr.push(String(o.email).toLowerCase());
+          return arr.filter(Boolean);
+        })();
+
+        const isOwner = currentCandidates.length && ownerCandidates.length && currentCandidates.some(c => ownerCandidates.includes(c));
+
+        // Check members: each member may be id string or populated object
+        const isMember = (() => {
+          if (!currentCandidates.length || !Array.isArray(project.members)) return false;
+          return project.members.some(m => {
+            if (!m) return false;
+            const memberCandidates = [];
+            if (typeof m === 'string') memberCandidates.push(m.toString());
+            else {
+              if (m._id) memberCandidates.push(m._id.toString());
+              if (m.numeroEtudiant) memberCandidates.push(String(m.numeroEtudiant));
+              if (m.email) memberCandidates.push(String(m.email).toLowerCase());
+            }
+            return currentCandidates.some(c => memberCandidates.includes(c));
+          });
+        })();
 
         // Debug info: helps identify mismatched id formats
         console.debug('Project load debug:', {
-          currentUserIdStr,
-          ownerIdStr,
-          projectMembers: Array.isArray(project.members) ? project.members.map(m => (m && (m._id || m)).toString()) : project.members,
+          currentCandidates,
+          ownerCandidates,
+          projectMembers: Array.isArray(project.members) ? project.members.map(m => {
+            if (!m) return null;
+            if (typeof m === 'string') return m.toString();
+            return {
+              _id: m._id && m._id.toString(),
+              numeroEtudiant: m.numeroEtudiant,
+              email: m.email && String(m.email).toLowerCase()
+            };
+          }) : project.members,
           isOwner,
           isMember
         });

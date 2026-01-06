@@ -6,6 +6,7 @@ const User = require("../models/User");
 
 /* ================= UTILITIES ================= */
 
+
 const resolveUserIdentifier = async (identifier) => {
   if (!identifier) return null;
 
@@ -27,6 +28,8 @@ const normalizeMembersInput = (members) => {
   if (Array.isArray(members)) return members;
   if (typeof members === "string") {
     return members.split(",").map(m => m.trim()).filter(Boolean);
+    //map(m => m.trim()) : pour enleve les espace avant et arprès chaque elem
+    //filter(Boolean) : enleve les undefined ,"",null
   }
   return [members];
 };
