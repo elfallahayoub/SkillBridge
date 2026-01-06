@@ -11,12 +11,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const API_BASE = 'http://localhost:4001';
 
+  // Current authenticated user (saved at login)
+  const currentUser = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('user')) || null;
+    } catch (e) { return null; }
+  })();
+
   // Keep the nice button effect
   if (joinBtn) {
-    joinBtn.addEventListener('click', () => {
-      joinBtn.textContent = 'Demande envoyée ✅';
-      joinBtn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+    joinBtn.addEventListener('click', async () => {
+      if (!currentUser) {
+        alert('Veuillez vous connecter pour demander à rejoindre le projet.');
+        return window.location.href = '../login/login.html';
+      }
+
       joinBtn.disabled = true;
+      joinBtn.textContent = 'Envoi...';
+
+      try {
+        const id = new URLSearchParams(window.location.search).get('id');
+        const res = await fetch(`${API_BASE}/api/projects/${id}/requestJoin`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: currentUser._id })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Erreur');
+
+        joinBtn.textContent = 'Demande envoyée ✅';
+        joinBtn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+      } catch (err) {
+        console.error('Join request failed', err);
+        joinBtn.disabled = false;
+        joinBtn.textContent = 'Demander à rejoindre';
+        alert('Impossible d\'envoyer la demande. Réessayez.');
+      }
     });
   }
 
@@ -77,6 +108,76 @@ document.addEventListener('DOMContentLoaded', () => {
           project.members.forEach((m) => membersList.appendChild(createMemberCard(m)));
         } else {
           membersList.innerHTML = '<p>Aucun membre inscrit.</p>';
+        }
+      }
+
+      // Disable/hide join button for owner or existing members
+      if (joinBtn) {
+        // Build identifier candidates from current user (support _id, numeroEtudiant, email)
+        const getUserCandidates = (u) => {
+          if (!u) return [];
+          const cand = [];
+          if (u._id) cand.push(u._id.toString());
+          if (u.numeroEtudiant) cand.push(String(u.numeroEtudiant));
+          if (u.email) cand.push(String(u.email).toLowerCase());
+          return cand.filter(Boolean);
+        };
+
+        const currentCandidates = getUserCandidates(currentUser);
+
+        // Build owner candidates (owner may be populated object or id string)
+        const ownerCandidates = (() => {
+          const o = project.owner;
+          if (!o) return [];
+          if (typeof o === 'string') return [o.toString()];
+          const arr = [];
+          if (o._id) arr.push(o._id.toString());
+          if (o.numeroEtudiant) arr.push(String(o.numeroEtudiant));
+          if (o.email) arr.push(String(o.email).toLowerCase());
+          return arr.filter(Boolean);
+        })();
+
+        const isOwner = currentCandidates.length && ownerCandidates.length && currentCandidates.some(c => ownerCandidates.includes(c));
+
+        // Check members: each member may be id string or populated object
+        const isMember = (() => {
+          if (!currentCandidates.length || !Array.isArray(project.members)) return false;
+          return project.members.some(m => {
+            if (!m) return false;
+            const memberCandidates = [];
+            if (typeof m === 'string') memberCandidates.push(m.toString());
+            else {
+              if (m._id) memberCandidates.push(m._id.toString());
+              if (m.numeroEtudiant) memberCandidates.push(String(m.numeroEtudiant));
+              if (m.email) memberCandidates.push(String(m.email).toLowerCase());
+            }
+            return currentCandidates.some(c => memberCandidates.includes(c));
+          });
+        })();
+
+        // Debug info: helps identify mismatched id formats
+        console.debug('Project load debug:', {
+          currentCandidates,
+          ownerCandidates,
+          projectMembers: Array.isArray(project.members) ? project.members.map(m => {
+            if (!m) return null;
+            if (typeof m === 'string') return m.toString();
+            return {
+              _id: m._id && m._id.toString(),
+              numeroEtudiant: m.numeroEtudiant,
+              email: m.email && String(m.email).toLowerCase()
+            };
+          }) : project.members,
+          isOwner,
+          isMember
+        });
+
+        if (isOwner) {
+          joinBtn.style.display = 'none';
+        } else if (isMember) {
+          joinBtn.textContent = 'Déjà membre';
+          joinBtn.disabled = true;
+          joinBtn.style.background = 'linear-gradient(135deg, #6b7280, #4b5563)';
         }
       }
     } catch (err) {
