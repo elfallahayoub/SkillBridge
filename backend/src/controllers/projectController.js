@@ -187,3 +187,17 @@ exports.deleteProject = async (req, res) => {
     });
   }
 };
+
+/* ================= DELETE ALL PROJECTS ================= */
+exports.deleteAllProjects = async (req, res) => {
+  try {
+    const result = await Project.deleteMany({});
+    res.status(200).json({
+      message: "All projects deleted",
+      deletedCount: result.deletedCount
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};

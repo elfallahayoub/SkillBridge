@@ -11,12 +11,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const API_BASE = 'http://localhost:4001';
 
+  // Current authenticated user (saved at login)
+  const currentUser = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('user')) || null;
+    } catch (e) { return null; }
+  })();
+
   // Keep the nice button effect
   if (joinBtn) {
-    joinBtn.addEventListener('click', () => {
-      joinBtn.textContent = 'Demande envoyée ✅';
-      joinBtn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+    joinBtn.addEventListener('click', async () => {
+      if (!currentUser) {
+        alert('Veuillez vous connecter pour demander à rejoindre le projet.');
+        return window.location.href = '../login/login.html';
+      }
+
       joinBtn.disabled = true;
+      joinBtn.textContent = 'Envoi...';
+
+      try {
+        const id = new URLSearchParams(window.location.search).get('id');
+        const res = await fetch(`${API_BASE}/api/projects/${id}/requestJoin`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: currentUser._id })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Erreur');
+
+        joinBtn.textContent = 'Demande envoyée ✅';
+        joinBtn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+      } catch (err) {
+        console.error('Join request failed', err);
+        joinBtn.disabled = false;
+        joinBtn.textContent = 'Demander à rejoindre';
+        alert('Impossible d\'envoyer la demande. Réessayez.');
+      }
     });
   }
 
@@ -77,6 +108,36 @@ document.addEventListener('DOMContentLoaded', () => {
           project.members.forEach((m) => membersList.appendChild(createMemberCard(m)));
         } else {
           membersList.innerHTML = '<p>Aucun membre inscrit.</p>';
+        }
+      }
+
+      // Disable/hide join button for owner or existing members
+      if (joinBtn) {
+        const ownerIdRaw = project.owner && (project.owner._id || project.owner);
+        const ownerIdStr = ownerIdRaw ? ownerIdRaw.toString() : null;
+        const currentUserIdStr = currentUser && currentUser._id ? currentUser._id.toString() : null;
+
+        const isOwner = currentUserIdStr && ownerIdStr && currentUserIdStr === ownerIdStr;
+        const isMember = currentUserIdStr && Array.isArray(project.members) && project.members.some(m => {
+          const mid = (m && (m._id || m)).toString();
+          return mid === currentUserIdStr;
+        });
+
+        // Debug info: helps identify mismatched id formats
+        console.debug('Project load debug:', {
+          currentUserIdStr,
+          ownerIdStr,
+          projectMembers: Array.isArray(project.members) ? project.members.map(m => (m && (m._id || m)).toString()) : project.members,
+          isOwner,
+          isMember
+        });
+
+        if (isOwner) {
+          joinBtn.style.display = 'none';
+        } else if (isMember) {
+          joinBtn.textContent = 'Déjà membre';
+          joinBtn.disabled = true;
+          joinBtn.style.background = 'linear-gradient(135deg, #6b7280, #4b5563)';
         }
       }
     } catch (err) {
