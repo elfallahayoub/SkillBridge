@@ -4,28 +4,27 @@ const projectSchema = new mongoose.Schema(
 	{
 		title: {
 			type: String,
-			required: true,
-			trim: true
+			required: true
+			
 		},
 		description: {
 			type: String,
 			required: true,
-			trim: true
+			
 		},
 		category: {
 			type: String,
-			required: true,
-			trim: true
+			required: true
 		},
 		members: [
 			{
-				type: mongoose.Schema.Types.ObjectId,
+				type: mongoose.Schema.Types.ObjectId, //owner pointe vers la collection User
 				ref: "User"
 			}
 		],
 
 		owner: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: mongoose.Schema.Types.ObjectId, 
 			ref: "User"
 		},
 

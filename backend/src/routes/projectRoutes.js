@@ -3,20 +3,28 @@ const router = express.Router();
 const projectController = require("../controllers/projectController");
 const enrollmentController = require("../controllers/enrollmentController");
 
-function ensureHandler(fn, name) {
-	if (typeof fn !== 'function') {
-		throw new TypeError(`Route handler for ${name} is not a function`);
-	}
-	return fn;
-}
+// Create project
+router.post("/createProject", projectController.createProject);
 
-router.post("/createProject", ensureHandler(projectController.createProject, 'createProject'));
-router.post(":id/requestJoin", ensureHandler(enrollmentController.requestToJoin, 'requestToJoin'));
-router.get("/getAllProjects", ensureHandler(projectController.getAllProjects, 'getAllProjects'));
-router.get("/getProject/:id", ensureHandler(projectController.getProjectById, 'getProjectById'));
-router.get("/enroll/accept/:token", ensureHandler(enrollmentController.acceptEnrollment, 'acceptEnrollment'));
-router.put("/:id", ensureHandler(projectController.updateProject, 'updateProject'));
-router.delete("/deleteProject/:id", ensureHandler(projectController.deleteProject, 'deleteProject'));
-router.delete("/deleteAllProjects", ensureHandler(projectController.deleteAllProjects, 'deleteAllProjects'));
+// Get all projects
+router.get("/getAllProjects", projectController.getAllProjects);
+
+// Get project by id
+router.get("/getProject/:id", projectController.getProjectById);
+
+// Request to join a project
+router.post("/:id/requestJoin", enrollmentController.requestToJoin);
+
+// Accept enrollment
+router.get("/enroll/accept/:token", enrollmentController.acceptEnrollment);
+
+// Update project
+router.put("/updateProject/:id", projectController.updateProject);
+
+// Delete project
+router.delete("/deleteProject/:id", projectController.deleteProject);
+
+// Delete all projects
+router.delete("/deleteAllProjects", projectController.deleteAllProjects);
 
 module.exports = router;
