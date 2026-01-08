@@ -1,99 +1,122 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const API = 'http://localhost:4001';
-  const projectId = new URLSearchParams(window.location.search).get('id');
+document.addEventListener("DOMContentLoaded", () => {
 
-  const user = JSON.parse(localStorage.getItem('user'));
+  /* ================== CONFIG ================== */
+  const API = "http://localhost:4001";
+  const projectId = new URLSearchParams(window.location.search).get("id");
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const title = document.getElementById('projectTitle');
-  const desc = document.getElementById('projectDescription');
-  const tagline = document.getElementById('projectTagline');
-  const founderName = document.getElementById('founderName');
-  const membersList = document.getElementById('membersList');
-  const joinBtn = document.querySelector('.join-btn');
+  /* ================== ELEMENTS ================== */
+  const title = document.getElementById("projectTitle");
+  const desc = document.getElementById("projectDescription");
+  const tagline = document.getElementById("projectTagline");
+  const founderName = document.getElementById("founderName");
+  const membersList = document.getElementById("membersList");
+  const joinBtn = document.querySelector(".join-btn");
 
-  let projectData = null;
+  let project = null;
 
-  // ===== Carte membre (effets CSS conservés) =====
-  const memberCard = m => {
-    const div = document.createElement('div');
-    div.className = 'member-card';
+  /* ================== UI HELPERS ================== */
+
+  const createMemberCard = (member) => {
+    const div = document.createElement("div");
+    div.className = "member-card";
     div.innerHTML = `
-      <img src="/assets/images/default-avatar.png" class="member-avatar">
-      <h4>${m.nom || ''} ${m.prenom || ''}</h4>
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+      <h4>${member.nom} ${member.prenom}</h4>
     `;
     return div;
   };
 
-  // ===== Charger projet =====
+  const setJoinButtonState = (state) => {
+    const states = {
+      owner: { text: "👑 Organizer", disabled: true },
+      member: { text: "✅ Déjà membre", disabled: true },
+      pending: { text: "⏳ Demande envoyée", disabled: true },
+      join: { text: "🤝 Rejoindre le projet", disabled: false }
+    };
+
+    joinBtn.textContent = states[state].text;
+    joinBtn.disabled = states[state].disabled;
+  };
+
+  /* ================== LOAD PROJECT ================== */
+
   async function loadProject() {
     try {
       const res = await fetch(`${API}/api/projects/getProject/${projectId}`);
-      projectData = await res.json();
+      project = await res.json();
 
-      title.textContent = projectData.title;
-      desc.textContent = projectData.description;
-      tagline.textContent = projectData.category;
-
-      // Fondateur
-      if (projectData.owner) {
-        founderName.textContent =
-          `${projectData.owner.nom} ${projectData.owner.prenom}`;
-
-        // cacher bouton si fondateur 
-        if (user && user._id === projectData.owner._id) {
-          joinBtn.style.display = 'none';
-        }
-      }
-
-      // Membres
-      membersList.innerHTML = '';
-      projectData.members.forEach(m =>
-        membersList.appendChild(memberCard(m))
-      );
-
-      // Désactiver bouton si déjà membre
-      if (user && projectData.members.some(m => m._id === user._id)) {
-        joinBtn.textContent = 'Déjà membre';
-        joinBtn.disabled = true;
-      }
+      renderProject();
+      renderMembers();
+      handleJoinButton();
 
     } catch (err) {
-      title.textContent = 'Erreur de chargement';
+      title.textContent = "Erreur de chargement";
       console.error(err);
     }
   }
 
-  // ===== Rejoindre projet (via updateProject) =====
-  if (joinBtn) {
-    joinBtn.addEventListener('click', async () => {
-      if (!user) {
-        alert('Veuillez vous connecter');
-        return location.href = '../login/login.html';
-      }
+  /* ================== RENDER ================== */
 
-      joinBtn.disabled = true;
-      joinBtn.textContent = 'Envoi...';
+  function renderProject() {
+    title.textContent = project.title;
+    desc.textContent = project.description;
+    tagline.textContent = project.category || "";
 
-      try {
-        const membersIds = projectData.members.map(m => m._id);
-        membersIds.push(user._id);
-
-        await fetch(`${API}/api/projects/${projectId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ members: membersIds })
-        });
-
-        joinBtn.textContent = 'Ajouté ✅';
-        loadProject(); // refresh UI
-
-      } catch (e) {
-        joinBtn.disabled = false;
-        joinBtn.textContent = '🤝 Rejoindre le projet';
-        alert('Erreur');
-      }
-    });
+    if (project.owner) {
+      founderName.textContent =
+        `${project.owner.nom} ${project.owner.prenom}`;
+    }
   }
+
+  function renderMembers() {
+    membersList.innerHTML = "";
+    project.members.forEach(m =>
+      membersList.appendChild(createMemberCard(m))
+    );
+  }
+
+  /* ================== JOIN LOGIC ================== */
+
+  function handleJoinButton() {
+    if (!user) return setJoinButtonState("join");
+
+    if (user._id === project.owner?._id)
+      return setJoinButtonState("owner");
+
+    if (project.members.some(m => m._id === user._id))
+      return setJoinButtonState("member");
+
+    setJoinButtonState("join");
+  }
+
+  async function joinProject() {
+    if (!user) {
+      alert("Veuillez vous connecter");
+      return location.href = "../login/login.html";
+    }
+
+    setJoinButtonState("pending");
+
+    try {
+      await fetch(`${API}/api/joinRequests`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectId,
+          userId: user._id
+        })
+      });
+
+    } catch (err) {
+      alert("Erreur lors de la demande");
+      setJoinButtonState("join");
+    }
+  }
+
+  /* ================== EVENTS ================== */
+
+  if (joinBtn) joinBtn.addEventListener("click", joinProject);
 
   loadProject();
 });
