@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>SkillBridge — Projets</title>
 
   <!-- Google Font -->
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
     rel="stylesheet"
+  />
+  
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
 
   <!-- Styles -->
@@ -23,38 +28,51 @@
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <a href="/home/home.html" class="logo-link">
-      <h1>Skill<span>Bridge</span></h1>
+      <h1><i class="fas fa-bridge"></i> Skill<span>Bridge</span></h1>
     </a>
 
     <ul class="nav-links">
-      <li><a href="/home/home.html">Accueil</a></li>
-      <li><a href="/projects/projects.html" class="active">Projets</a></li>
-      <li><a href="/profil/profile.html">Profil</a></li>
+      <li><a href="/home/home.html"><i class="fas fa-home"></i> Accueil</a></li>
+      <li><a href="/projects/projects.html" class="active"><i class="fas fa-project-diagram"></i> Projets</a></li>
+      <li><a href="/profil/profile.html"><i class="fas fa-user"></i> Profil</a></li>
     </ul>
 
-    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
   </nav>
 
   <!-- ===== PROJECTS SECTION ===== -->
   <section class="projects">
     <div class="projects-header">
-      <h1>Projets disponibles</h1>
-
+      <h1>Projets Innovants</h1>
+      
       <p>
-        Découvre des projets étudiants innovants et collaboratifs.
+        Découvre des projets étudiants collaboratifs et passionnants.
         Rejoins une équipe, propose ton idée ou explore les fondateurs
-        passionnés derrière chaque initiative.
+        derrière chaque initiative.
       </p>
-
+      
       <img
         src="https://cdn-icons-png.flaticon.com/512/906/906343.png"
-        alt="Project Illustration"
+        alt="Collaboration Illustration"
       />
     </div>
 
-    <!-- Projects Cards -->
+    <!-- Contrôles simples -->
+    <div class="controls">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search" placeholder="Rechercher un projet...">
+      </div>
+      <button id="refreshBtn">
+        <i class="fas fa-sync-alt"></i> Rafraîchir
+      </button>
+    </div>
+
+    <!-- Projects Grid -->
     <div class="projects-grid" id="projectsGrid">
-      <!-- Les cartes seront injectées ici dynamiquement depuis l'API backend -->
+      <!-- Les cartes seront ajoutées ici -->
     </div>
   </section>
 </body>

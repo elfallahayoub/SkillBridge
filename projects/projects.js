@@ -1,132 +1,219 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  const projectsGrid = document.getElementById("projectsGrid");
-
-  /* ================= CONFIG ================= */
+document.addEventListener("DOMContentLoaded", function() {
+  // ===== CONFIGURATION =====
   const API_BASE = "http://localhost:4001";
-  const FETCH_TIMEOUT = 5000;
+  const projectsGrid = document.getElementById("projectsGrid");
+  const searchInput = document.getElementById("search");
+  const refreshBtn = document.getElementById("refreshBtn");
 
-  /* ================= FETCH WITH TIMEOUT ================= */
-  function fetchWithTimeout(resource, options = {}) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+  // ===== VARIABLES GLOBALES =====
+  let allProjects = [];
 
-    return fetch(resource, {
-      ...options,
-      signal: controller.signal,
-    }).finally(() => clearTimeout(id));
-  }
-
-  /* ================= LOAD PROJECTS ================= */
+  // ===== CHARGER LES PROJETS =====
   async function loadProjects() {
-    const url = `${API_BASE}/api/projects/getAllProjects`;
-
+    showLoading();
+    
     try {
-      const res = await fetchWithTimeout(url);
-
-      if (!res.ok) {
-        projectsGrid.innerHTML =
-          "<p>Impossible de charger les projets pour le moment.</p>";
-        return;
+      const response = await fetch(`${API_BASE}/api/projects/getAllProjects`);
+      
+      if (!response.ok) {
+        throw new Error('Erreur réseau');
       }
-
-      const data = await res.json();
-      const projects = Array.isArray(data) ? data : data.projects || [];
-
-      renderProjects(projects);
-    } catch (err) {
-      console.error("Erreur chargement projets :", err);
-      projectsGrid.innerHTML =
-        "<p>Impossible de charger les projets pour le moment.</p>";
+      
+      const projects = await response.json();
+      allProjects = projects;
+      displayProjects(projects);
+      
+    } catch (error) {
+      console.error('Erreur:', error);
+      showError();
     }
   }
 
-  /* ================= RENDER PROJECTS ================= */
-  function renderProjects(projects) {
-    if (!projects.length) {
-      projectsGrid.innerHTML = "<p>Aucun projet disponible.</p>";
+  // ===== AFFICHER LES PROJETS =====
+  function displayProjects(projects) {
+    if (projects.length === 0) {
+      projectsGrid.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <h3>Aucun projet disponible</h3>
+          <p>Soyez le premier à créer un projet !</p>
+        </div>
+      `;
       return;
     }
 
-    projectsGrid.innerHTML = projects
-      .map((p) => {
-        const date = p.createdAt
-          ? new Date(p.createdAt).toLocaleDateString("fr-FR")
-          : "-";
-
-        const founder = p.owner
-          ? `${p.owner.nom || ""} ${p.owner.prenom || ""}`.trim()
-          : "Inconnu";
-
-        const membersHtml =
-          Array.isArray(p.members) && p.members.length
-            ? `
-              <ul class="member-list">
-                ${p.members
-                  .map((m) => {
-                    if (!m) return "<li>Inconnu</li>";
-                    if (typeof m === "string")
-                      return `<li>${escapeHtml(m)}</li>`;
-
-                    const name = `${m.nom || ""} ${m.prenom || ""}`.trim();
-                    return `<li>${escapeHtml(name || "Membre")}</li>`;
-                  })
-                  .join("")}
-              </ul>
-            `
-            : "<span>Aucun membre listé</span>";
-
-        return `
-          <article class="project-card">
-            <h3>${escapeHtml(p.title)}</h3>
-
-            <p class="founder">
-              👤 Fondateur : <strong>${escapeHtml(founder)}</strong>
+    projectsGrid.innerHTML = projects.map(project => `
+      <div class="project-card">
+        <h3>${escapeHtml(project.title)}</h3>
+        
+        <div class="project-info">
+          <p><i class="fas fa-user-tie"></i> Fondateur: 
+            <strong>${getUserName(project.owner)}</strong>
+          </p>
+          
+          <p><i class="far fa-calendar"></i> Créé le: 
+            <strong>${formatDate(project.createdAt)}</strong>
+          </p>
+          
+          ${project.category ? `
+            <p><i class="fas fa-tag"></i> Catégorie: 
+              <strong>${escapeHtml(project.category)}</strong>
             </p>
+          ` : ''}
+        </div>
+        
+        <div class="members">
+          <p><i class="fas fa-users"></i> Membres (${project.members.length})</p>
+          ${project.members.slice(0, 3).map(member => `
+            <div class="member-item">
+              <div class="member-avatar">${getInitials(getUserName(member))}</div>
+              <span>${getUserName(member)}</span>
+            </div>
+          `).join('')}
+          ${project.members.length > 3 ? 
+            `<p>... et ${project.members.length - 3} autres</p>` : ''}
+        </div>
+        
+        <div class="project-description">
+          <p>${escapeHtml(project.description.substring(0, 150))}...</p>
+        </div>
+        
+        <div class="card-buttons">
+          <button class="view-btn" onclick="viewProject('${project._id}')">
+            <i class="fas fa-eye"></i> Voir
+          </button>
+          <button class="join-btn" onclick="joinProject('${project._id}')">
+            <i class="fas fa-user-plus"></i> Rejoindre
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
 
-            <p class="date">
-              📅 Créé le : <strong>${date}</strong>
-            </p>
-
-            <p class="members">👥 Membres :</p>
-            ${membersHtml}
-
-            <p class="desc">${escapeHtml(p.description || "")}</p>
-
-            <button class="join-btn" data-id="${p._id}">
-              Voir le projet
-            </button>
-          </article>
-        `;
-      })
-      .join("");
-
-    /* ===== BUTTON CLICK ===== */
-    document.querySelectorAll(".join-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.id;
-        window.location.href = `/projet_details/project-details.html?id=${id}`;
+  // ===== RECHERCHE =====
+  function setupSearch() {
+    searchInput.addEventListener('input', function() {
+      const searchText = this.value.toLowerCase().trim();
+      
+      if (!searchText) {
+        displayProjects(allProjects);
+        return;
+      }
+      
+      const filtered = allProjects.filter(project => {
+        const title = project.title?.toLowerCase() || '';
+        const description = project.description?.toLowerCase() || '';
+        const category = project.category?.toLowerCase() || '';
+        
+        return title.includes(searchText) || 
+               description.includes(searchText) ||
+               category.includes(searchText);
       });
+      
+      displayProjects(filtered);
     });
   }
 
-  /* ================= ESCAPE HTML ================= */
-  function escapeHtml(str) {
-    return String(str || "").replace(/[&<>"']/g, (s) => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;",
-    })[s]);
+  // ===== FONCTIONS UTILITAIRES =====
+  function getUserName(user) {
+    if (!user) return 'Inconnu';
+    if (typeof user === 'string') return 'Utilisateur';
+    return `${user.prenom || ''} ${user.nom || ''}`.trim() || 'Utilisateur';
   }
 
-  /* ================= BURGER MENU ================= */
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
+  function getInitials(name) {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
+  }
 
-  /* ================= INIT ================= */
+  function formatDate(dateString) {
+    if (!dateString) return 'Date inconnue';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR');
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // ===== AFFICHAGE DES ÉTATS =====
+  function showLoading() {
+    projectsGrid.innerHTML = `
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Chargement des projets...</p>
+      </div>
+    `;
+  }
+
+  function showError() {
+    projectsGrid.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Erreur de chargement</h3>
+        <p>Impossible de charger les projets</p>
+        <button onclick="location.reload()" style="
+          margin-top: 15px;
+          padding: 10px 20px;
+          background: #60a5fa;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        ">
+          Réessayer
+        </button>
+      </div>
+    `;
+  }
+
+  // ===== FONCTIONS GLOBALES =====
+  window.viewProject = function(projectId) {
+    window.location.href = `/projet_details/project-details.html?id=${projectId}`;
+  };
+
+  window.joinProject = function(projectId) {
+    // Stocker l'ID du projet dans localStorage
+    localStorage.setItem('selectedProjectId', projectId);
+    
+    // Rediriger vers la page de demande
+    window.location.href = '/join-request/join-request.html';
+    
+    // OU faire une requête directe
+    // fetch(`${API_BASE}/api/projects/${projectId}/requestJoin`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ userId: 'VOTRE_ID_UTILISATEUR' })
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   alert('Demande envoyée avec succès !');
+    // })
+    // .catch(error => {
+    //   alert('Erreur lors de la demande');
+    // });
+  };
+
+  // ===== ÉVÉNEMENTS =====
+  refreshBtn.addEventListener('click', loadProjects);
+
+  // Menu burger (si nécessaire)
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', function() {
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+  }
+
+  // ===== INITIALISATION =====
   loadProjects();
+  setupSearch();
 });
