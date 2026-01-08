@@ -1,4 +1,15 @@
+function goToModify() {
+   window.location.href = "../modify/modify.html";
+}
+function createProject() {
+  window.location.href = "../create_project/create-project.html";
+  
+
+}
 document.addEventListener("DOMContentLoaded", () => {
+// Déclarez-la comme une fonction globale (pas à l'intérieur d'un autre bloc)
+
+
 
 
   const user = JSON.parse(localStorage.getItem("user")); 
@@ -8,9 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "../login/login.html";
     return;
   }
-  function goToModify() {
-  window.location.href = "../modify/modify.html";
-}
+
 
 
   // Inject user data into profile
