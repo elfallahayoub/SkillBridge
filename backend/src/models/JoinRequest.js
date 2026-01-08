@@ -1,10 +1,32 @@
-const express = require("express");
-const router = express.Router();
-const controller = require("../controllers/joinRequestController");
+const mongoose = require("mongoose");
 
-router.post("/", controller.createRequest);
-router.get("/owner/:ownerId", controller.getOwnerRequests);
-router.put("/:id/accept", controller.acceptRequest);
-router.put("/:id/reject", controller.rejectRequest);
+const joinRequestSchema = new mongoose.Schema(
+  {
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+      required: true
+    },
 
-module.exports = router;
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
+
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
+
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "rejected"],
+      default: "pending"
+    }
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("JoinRequest", joinRequestSchema);
