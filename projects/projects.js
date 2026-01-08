@@ -1,104 +1,132 @@
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menu-toggle");
   const navLinks = document.querySelector(".nav-links");
-  const buttons = document.querySelectorAll(".join-btn");
   const projectsGrid = document.getElementById("projectsGrid");
-  if (!projectsGrid) {
-    console.error('projectsGrid element not found — check that #projectsGrid exists in HTML');
-  }
 
-  // Fetch projects from backend and render
-  // Force using the backend on localhost:4001
-  const API_BASE = 'http://localhost:4001';
-  const FETCH_TIMEOUT = 5000; // ms
+  /* ================= CONFIG ================= */
+  const API_BASE = "http://localhost:4001";
+  const FETCH_TIMEOUT = 5000;
 
+  /* ================= FETCH WITH TIMEOUT ================= */
   function fetchWithTimeout(resource, options = {}) {
-    const { timeout = FETCH_TIMEOUT } = options;
     const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
-    return fetch(resource, { ...options, signal: controller.signal })
-      .finally(() => clearTimeout(id));
+    const id = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+
+    return fetch(resource, {
+      ...options,
+      signal: controller.signal,
+    }).finally(() => clearTimeout(id));
   }
 
+  /* ================= LOAD PROJECTS ================= */
   async function loadProjects() {
     const url = `${API_BASE}/api/projects/getAllProjects`;
-    console.log('Fetching projects from', url);
+
     try {
-      const res = await fetchWithTimeout(url, { timeout: FETCH_TIMEOUT });
-      console.log('Response from', url, 'status', res.status);
+      const res = await fetchWithTimeout(url);
+
       if (!res.ok) {
-        console.warn('Request to', url, 'failed with status', res.status);
-        if (projectsGrid) projectsGrid.innerHTML = '<p>Impossible de charger les projets pour le moment.</p>';
+        projectsGrid.innerHTML =
+          "<p>Impossible de charger les projets pour le moment.</p>";
         return;
       }
-      const payload = await res.json();
-      // API may return paginated { total, page, limit, projects }
-      const projects = Array.isArray(payload) ? payload : (Array.isArray(payload.projects) ? payload.projects : []);
-      console.log('Fetched', projects.length, 'projects from', url);
+
+      const data = await res.json();
+      const projects = Array.isArray(data) ? data : data.projects || [];
+
       renderProjects(projects);
     } catch (err) {
-      console.warn('Request to', url, 'failed:', err && err.name ? err.name : err.message);
-      if (projectsGrid) projectsGrid.innerHTML = '<p>Impossible de charger les projets pour le moment.</p>';
+      console.error("Erreur chargement projets :", err);
+      projectsGrid.innerHTML =
+        "<p>Impossible de charger les projets pour le moment.</p>";
     }
   }
 
+  /* ================= RENDER PROJECTS ================= */
   function renderProjects(projects) {
-    if (!projects || projects.length === 0) {
-      projectsGrid.innerHTML = '<p>Aucun projet publié pour l\'instant.</p>';
+    if (!projects.length) {
+      projectsGrid.innerHTML = "<p>Aucun projet disponible.</p>";
       return;
     }
 
-    projectsGrid.innerHTML = projects.map(p => {
-      const date = p.createdAt ? new Date(p.createdAt).toLocaleDateString('fr-FR') : '-';
-      const founder = p.owner ? `${p.owner.nom || ''} ${p.owner.prenom || ''}`.trim() : 'Inconnu';
-      const membersHtml = (Array.isArray(p.members) && p.members.length)
-        ? `<ul class="member-list">${p.members.map(m => {
-            // member can be populated object or plain id string
-            if (!m) return '<li>Inconnu</li>';
-            if (typeof m === 'string') return `<li>${escapeHtml(m)}</li>`;
-            const name = `${m.nom || ''} ${m.prenom || ''}`.trim();
-            return `<li>${escapeHtml(name || (m._id || 'Membre'))}</li>`;
-          }).join('')}</ul>`
-        : '<span>Aucun membre listé</span>';
+    projectsGrid.innerHTML = projects
+      .map((p) => {
+        const date = p.createdAt
+          ? new Date(p.createdAt).toLocaleDateString("fr-FR")
+          : "-";
 
-      return `
-        <div class="project-card" data-id="${p._id}">
-          <h3>${escapeHtml(p.title)}</h3>
-          <p class="founder">👤 Fondateur : <strong>${escapeHtml(founder)}</strong></p>
-          <p class="date">📅 Créé le : <strong>${date}</strong></p>
-          <p class="members">👥 Membres :</p>
-          ${membersHtml}
-          <p class="desc">${escapeHtml(p.description || '')}</p>
-          <button class="join-btn" data-id="${p._id}">Voir le projet</button>
-        </div>
-      `;
-    }).join('');
+        const founder = p.owner
+          ? `${p.owner.nom || ""} ${p.owner.prenom || ""}`.trim()
+          : "Inconnu";
 
-    // Attach click handlers to buttons
-    document.querySelectorAll('.join-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = e.currentTarget.dataset.id;
+        const membersHtml =
+          Array.isArray(p.members) && p.members.length
+            ? `
+              <ul class="member-list">
+                ${p.members
+                  .map((m) => {
+                    if (!m) return "<li>Inconnu</li>";
+                    if (typeof m === "string")
+                      return `<li>${escapeHtml(m)}</li>`;
+
+                    const name = `${m.nom || ""} ${m.prenom || ""}`.trim();
+                    return `<li>${escapeHtml(name || "Membre")}</li>`;
+                  })
+                  .join("")}
+              </ul>
+            `
+            : "<span>Aucun membre listé</span>";
+
+        return `
+          <article class="project-card">
+            <h3>${escapeHtml(p.title)}</h3>
+
+            <p class="founder">
+              👤 Fondateur : <strong>${escapeHtml(founder)}</strong>
+            </p>
+
+            <p class="date">
+              📅 Créé le : <strong>${date}</strong>
+            </p>
+
+            <p class="members">👥 Membres :</p>
+            ${membersHtml}
+
+            <p class="desc">${escapeHtml(p.description || "")}</p>
+
+            <button class="join-btn" data-id="${p._id}">
+              Voir le projet
+            </button>
+          </article>
+        `;
+      })
+      .join("");
+
+    /* ===== BUTTON CLICK ===== */
+    document.querySelectorAll(".join-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.id;
         window.location.href = `/projet_details/project-details.html?id=${id}`;
       });
     });
   }
 
+  /* ================= ESCAPE HTML ================= */
   function escapeHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/[&<>"'`]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;',"`":'&#96;'})[s]);
+    return String(str || "").replace(/[&<>"']/g, (s) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    })[s]);
   }
 
-  loadProjects();
-
-  // Menu burger mobile
+  /* ================= BURGER MENU ================= */
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
 
-  // Redirection vers page détail projet
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      window.location.href = "/projet_details/project-details.html";
-    });
-  });
+  /* ================= INIT ================= */
+  loadProjects();
 });

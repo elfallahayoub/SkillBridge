@@ -7,6 +7,14 @@ body {
   overflow-x: hidden;
 }
 
+.nav-links a {
+  color: #ffffff ;
+  text-decoration: none; /* Optionnel : enlever le soulignement */
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: #2b63e3; /* Couleur au survol */ /* Optionnel : ajouter soulignement */
+}
 /* Fade-in utility for subtle entrance animations (no JS changes required) */
 .fade-in {
   opacity: 0;

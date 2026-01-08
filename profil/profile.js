@@ -1,9 +1,27 @@
+function goToModify() {
+   window.location.href = "../modify/modify.html";
+}
+function createProject() {
+  window.location.href = "../create_project/create-project.html";
+  
+
+}
 document.addEventListener("DOMContentLoaded", () => {
+<<<<<<< HEAD
   const user = JSON.parse(localStorage.getItem("user"));
+=======
+// Déclarez-la comme une fonction globale (pas à l'intérieur d'un autre bloc)
+
+
+>>>>>>> main
 
   if (!user) {
     return window.location.href = "../login/login.html";
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 
   // ===== Infos utilisateur =====
   document.getElementById("username").textContent =

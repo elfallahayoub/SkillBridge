@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>SkillBridge — Projets</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="projects.css">
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="projects.css" />
+
+  <!-- Script -->
   <script src="projects.js" defer></script>
 </head>
-<body>
 
-  <!-- Navbar -->
+<body>
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <a href="/home/home.html" class="logo-link">
       <h1>Skill<span>Bridge</span></h1>
@@ -26,19 +35,27 @@
     <div class="menu-toggle" id="menu-toggle">☰</div>
   </nav>
 
-  <!-- Section principale -->
+  <!-- ===== PROJECTS SECTION ===== -->
   <section class="projects">
     <div class="projects-header">
       <h1>Projets disponibles</h1>
-      <p>Découvre des projets étudiants innovants et collaboratifs.  
-        Rejoins une équipe, propose ton idée ou explore les fondateurs passionnés derrière chaque initiative.</p>
-      <img src="https://cdn-icons-png.flaticon.com/512/906/906343.png" alt="Project Illustration">
+
+      <p>
+        Découvre des projets étudiants innovants et collaboratifs.
+        Rejoins une équipe, propose ton idée ou explore les fondateurs
+        passionnés derrière chaque initiative.
+      </p>
+
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/906/906343.png"
+        alt="Project Illustration"
+      />
     </div>
 
+    <!-- Projects Cards -->
     <div class="projects-grid" id="projectsGrid">
       <!-- Les cartes seront injectées ici dynamiquement depuis l'API backend -->
     </div>
   </section>
-
 </body>
 </html>
