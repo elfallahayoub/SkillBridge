@@ -190,6 +190,18 @@ body {
   transform: translateY(0);
 }
 
+.founder-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-role {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #34d399;
+  font-weight: 600;
+}
+
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
