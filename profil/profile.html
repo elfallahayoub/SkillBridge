@@ -12,7 +12,7 @@
 
   <!-- Navbar -->
   <nav class="navbar">
-        <a href="/home/home.html" class="logo-link">
+    <a href="/home/home.html" class="logo-link">
       <h1>Skill<span>Bridge</span></h1>
     </a>
     <ul>
@@ -25,42 +25,55 @@
   <!-- Profil -->
   <section class="profile-container">
     <div class="profile-header">
-      <img id="profilePhoto" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Photo de profil" class="profile-pic">
-
+      <img
+        id="profilePhoto"
+        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+        alt="Photo de profil"
+        class="profile-pic"
+      >
 
       <div class="user-info">
-        <h1 id="username">username</h1>
-        <p id="email">email@example.com</p>
-        <button class="edit-btn" onclick="window.location.href='../modify/modify.html'">
-            Modifier le profil
-        </button>
+        <h1 id="username">Username</h1>
+        <p id="userEmail">email@example.com</p>
 
+        <button
+          class="edit-btn"
+          onclick="window.location.href='../modify/modify.html'">
+          Modifier le profil
+        </button>
       </div>
     </div>
 
+    <!-- Infos -->
     <div class="profile-details">
       <h2>Informations personnelles</h2>
+
       <div class="details-grid">
         <div class="detail">
           <span class="label">Nom complet :</span>
           <span class="value" id="fullname"></span>
         </div>
+
         <div class="detail">
           <span class="label">Spécialité :</span>
           <span class="value" id="specialite"></span>
         </div>
+
         <div class="detail">
           <span class="label">Email :</span>
-          <span class="value" id="email"></span>
+          <span class="value" id="emailValue"></span>
         </div>
+
         <div class="detail">
           <span class="label">Université :</span>
-          <span class="value" id="university"></span>
+          <span class="value" id="university">—</span>
         </div>
+
         <div class="detail">
-          <span class="label">numeroEtudiant :</span>
+          <span class="label">Numéro étudiant :</span>
           <span class="value" id="numEtudiant"></span>
         </div>
+
         <div class="detail">
           <span class="label">Niveau :</span>
           <span class="value" id="level"></span>
@@ -68,28 +81,19 @@
       </div>
     </div>
 
+    <!-- Projets -->
     <div class="projects-section">
       <div class="projects-header">
         <h2>Mes projets</h2>
-        <button class="create-project-btn" onclick="createProject()">+ Créer un projet</button>
+        <button class="create-project-btn" id="createProjectBtn">
+          + Créer un projet
+        </button>
       </div>
 
-      <div class="projects-grid">
-        <div class="project-card">
-          <h3>Plateforme de tutorat étudiant</h3>
-          <p>Fondateur</p>
-          <button onclick="openProject()">Voir</button>
-        </div>
-
-        <div class="project-card">
-          <h3>Application de clubs universitaires</h3>
-          <p>Membre</p>
-          <button onclick="openProject()">Voir</button>
-        </div>
-      </div>
+      <!-- rempli dynamiquement -->
+      <div class="projects-grid" id="projectsGrid"></div>
     </div>
   </section>
-
 
   <script src="./profile.js" defer></script>
 </body>

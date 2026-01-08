@@ -1,71 +1,45 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const user = JSON.parse(localStorage.getItem("user"));
 
-
-  const user = JSON.parse(localStorage.getItem("user")); 
-
-  // If not logged in → redirect
   if (!user) {
-    window.location.href = "../login/login.html";
-    return;
+    return window.location.href = "../login/login.html";
   }
-  function goToModify() {
-  window.location.href = "../modify/modify.html";
-}
 
-
-  // Inject user data into profile
+  // ===== Infos utilisateur =====
   document.getElementById("username").textContent =
-    `${user.prenom} ${user.nom}`;
+    `${user.nom} ${user.prenom || ""}`;
 
-  document.getElementById("email").textContent =
-    user.email;
-
+  document.getElementById("userEmail").textContent = user.email;
+  document.getElementById("emailValue").textContent = user.email;
   document.getElementById("fullname").textContent =
-    `${user.nom} ${user.prenom}`;
+    `${user.nom} ${user.prenom || ""}`;
 
-  document.getElementById("university").textContent =
-    user.university || "ESISA";
+  document.getElementById("specialite").textContent =
+    user.specialite || "—";
 
   document.getElementById("numEtudiant").textContent =
-    user.numeroEtudiant || "*****";
+    user.numeroEtudiant || "—";
 
   document.getElementById("level").textContent =
-    user.niveau || "level";
+    user.niveau || "—";
 
-  document.getElementById("specialite").textContent = 
-    user.specialite || "vide";
-  
-  const profilePic = document.querySelector(".profile-pic");
+  if (user.photo) {
+    document.getElementById("profilePhoto").src = user.photo;
+  }
 
-  profilePic.src = user.photo
-    ? "http://localhost:4001" + user.photo
-    : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
-
-
-
-
-  const elements = document.querySelectorAll(".fade-in");
-
-  const showOnScroll = () => {
-    elements.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add("visible");
-      }
+  // ===== Bouton créer projet =====
+  document.getElementById("createProjectBtn")
+    .addEventListener("click", () => {
+      window.location.href = "../create_project/create-project.html";
     });
-  };
 
-  window.addEventListener("scroll", showOnScroll);
-  showOnScroll();
+  // ===== Projets (à charger depuis API plus tard) =====
+  const projectsGrid = document.getElementById("projectsGrid");
 
-
-/* 
-  window.editProfile = () => {
-    alert("Fonctionnalité à venir : modification du profil !");
-  }; */
-
-  window.openProject = () => {
-    window.location.href = "../project-details/project-details.html";
-  };
-
+  projectsGrid.innerHTML = `
+    <div class="project-card">
+      <h3>—</h3>
+      <p>Aucun projet pour le moment</p>
+    </div>
+  `;
 });
