@@ -7,12 +7,12 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="profile.css">
+  <link rel="stylesheet" href="../index.css">
 </head>
-<body>
-
+<body> 
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="/home/home.html" class="logo-link">
+        <a href="/home/home.html" class="logo-link">
       <h1>Skill<span>Bridge</span></h1>
     </a>
     <ul>
@@ -22,7 +22,9 @@
     </ul>
   </nav>
 
+  <!-- Espace réservé pour la navbar fixe -->
   <!-- Profil -->
+   
   <section class="profile-container">
     <div class="profile-header">
       <img
@@ -33,14 +35,12 @@
       >
 
       <div class="user-info">
-        <h1 id="username">Username</h1>
-        <p id="userEmail">email@example.com</p>
-
-        <button
-          class="edit-btn"
-          onclick="window.location.href='../modify/modify.html'">
-          Modifier le profil
+        <h1 id="username">username</h1>
+        <p id="email">email@example.com</p>
+        <button class="edit-btn" onclick="window.location.href='../modify/modify.html'">
+            Modifier le profil
         </button>
+
       </div>
     </div>
 
@@ -50,32 +50,32 @@
 
       <div class="details-grid">
         <div class="detail">
-          <span class="label">Nom complet :</span>
+          <span class="label">Nom complet</span>
           <span class="value" id="fullname"></span>
         </div>
 
         <div class="detail">
-          <span class="label">Spécialité :</span>
+          <span class="label">Spécialité</span>
           <span class="value" id="specialite"></span>
         </div>
 
         <div class="detail">
           <span class="label">Email :</span>
-          <span class="value" id="emailValue"></span>
+          <span class="value" id="email"></span>
         </div>
 
         <div class="detail">
           <span class="label">Université :</span>
-          <span class="value" id="university">—</span>
+          <span class="value" id="university"></span>
         </div>
 
         <div class="detail">
-          <span class="label">Numéro étudiant :</span>
+          <span class="label">numeroEtudiant :</span>
           <span class="value" id="numEtudiant"></span>
         </div>
 
         <div class="detail">
-          <span class="label">Niveau :</span>
+          <span class="label">Niveau</span>
           <span class="value" id="level"></span>
         </div>
       </div>
@@ -85,16 +85,27 @@
     <div class="projects-section">
       <div class="projects-header">
         <h2>Mes projets</h2>
-        <button class="create-project-btn" id="createProjectBtn">
-          + Créer un projet
-        </button>
+        <button class="create-project-btn" onclick="createProject()">+ Créer un projet</button>
       </div>
 
-      <!-- rempli dynamiquement -->
-      <div class="projects-grid" id="projectsGrid"></div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>Plateforme de tutorat étudiant</h3>
+          <p>Fondateur</p>
+          <button onclick="openProject()">Voir</button>
+        </div>
+
+        <div class="project-card">
+          <h3>Application de clubs universitaires</h3>
+          <p>Membre</p>
+          <button onclick="openProject()">Voir</button>
+        </div>
+      </div>
     </div>
   </section>
 
+
   <script src="./profile.js" defer></script>
+  <script src="../index.js" defer></script>
 </body>
-</html>
+</html> 

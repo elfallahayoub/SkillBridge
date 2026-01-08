@@ -7,19 +7,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             target.scrollIntoView({ behavior: 'smooth' });
         }
     });
-});
-
-
+}); 
 // Toggle mobile menu
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 
 menuToggle.addEventListener('click', () => {
   navLinks.classList.toggle('show');
-});
-
-
-
+}); 
 // Intersection Observer for fade-in animations
 const observerOptions = {
     threshold: 0.1,
@@ -369,6 +364,7 @@ console.log('%cConnectez-vous avec des étudiants passionnés', 'color: #0a1515;
       border-bottom: 1px solid rgba(10, 21, 21, 0.08);
     }
 
+    
     .navbar.navbar-scrolled {
       background: var(--navbar-bg) !important;
       box-shadow: 0 8px 30px rgba(10, 21, 21, 0.12) !important;
