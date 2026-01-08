@@ -10,46 +10,65 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-<header class="navbar">
-    <a href="/home/home.html" class="logo-link">
-      <h1>Skill<span>Bridge</span></h1>
-    </a>
-  <nav class="nav-links">
-    <ul>
-      <li><a href="#" class="active">Accueil</a></li>
-      <li><a href="/projects/projects.html">Projets</a></li>
-      <li><a href="/profil/profile.html">Profil</a></li>
-    </ul>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-wrapper">
+        
+      <!-- Logo -->
+      <div class="logo">
+        <a href="./home.html" style="text-decoration: none; color: inherit;">
+          <h1>Skill<span>Bridge</span></h1>
+        </a>
+      </div>
+
+      <!-- Theme Controls -->
+      <div class="nav-controls">
+        <button id="themeToggle" class="btn" title="Basculer le thème">🌙</button>
+        <input id="accentPicker" type="color" value="#6366f1" title="Choisir la couleur d'accent" />
+      </div>
+
+      <!-- Mobile Menu Toggle (right side) -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+
+      <!-- Navigation Links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="./home.html" class="active">Accueil</a></li>
+        <li><a href="../projects/projects.html">Projets</a></li>
+        <li><a href="../profil/profile.html">Profil</a></li>
+        <li><a href="../login/login.html" class="btn btn-primary connexion">Connexion</a></li>
+      </ul> 
+      </div>
+    </div>
   </nav>
-  <div class="menu-toggle" id="menu-toggle">☰</div>
-</header>
 
-<section class="hero">
-  <div class="hero-content">
-    <h1>Bienvenue sur <span>SkillBridge</span> 👋</h1>
-    <p>Collabore avec les meilleurs étudiants et construis ton avenir dès aujourd’hui.</p>
-    <button class="cta-btn">Explorer les projets</button>
-  </div>
+  <!-- HERO (extrait d'origine, inchangé) -->
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Bienvenue sur <span>SkillBridge</span> 👋</h1>
+        <p>Collabore avec les meilleurs étudiants et construis ton avenir dès aujourd’hui.</p>
+        <button class="cta-btn">Explorer les projets</button>
+      </div>
 
-  <div class="cards">
-    <div class="card">
-      <h3>Créer un projet</h3>
-      <p>Lance ton idée et trouve des collaborateurs passionnés.</p>
-    </div>
+      <div class="cards">
+        <div class="card">
+          <h3>Créer un projet</h3>
+          <p>Lance ton idée et trouve des collaborateurs passionnés.</p>
+        </div>
 
-    <div class="card">
-      <h3>Rejoindre une équipe</h3>
-      <p>Découvre des projets correspondant à tes compétences.</p>
-    </div>
+        <div class="card">
+          <h3>Rejoindre une équipe</h3>
+          <p>Découvre des projets correspondant à tes compétences.</p>
+        </div>
 
-    <div class="card">
-      <h3>Profil étudiant</h3>
-      <p>Présente tes talents et fais-toi remarquer par la communauté.</p>
-    </div>
-  </div>
-</section>
-
+        <div class="card">
+          <h3>Profil étudiant</h3>
+          <p>Présente tes talents et fais-toi remarquer par la communauté.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
 </body>
 </html>

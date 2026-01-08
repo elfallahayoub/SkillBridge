@@ -17,7 +17,7 @@ const resolveUserIdentifier = async (identifier) => {
   let user = await User.findOne({ numeroEtudiant: identifier }).select("_id");
   if (user) return user._id;
 
-  user = await User.findOne({ email: identifier }).select("_id");
+  user = await User.findOne({ email: identifier }).select("_id"); ////////////////////////////
   if (user) return user._id;
 
   return null;
