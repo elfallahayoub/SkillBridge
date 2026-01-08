@@ -1,208 +1,122 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.querySelector('.navbar');
-  const joinBtn = document.querySelector('.join-btn');
-  const projectTitle = document.getElementById('projectTitle');
-  const projectTagline = document.getElementById('projectTagline');
-  const projectDescription = document.getElementById('projectDescription');
-  const founderName = document.getElementById('founderName');
-  const founderBio = document.getElementById('founderBio');
-  const founderImg = document.getElementById('founderImg');
-  const membersList = document.getElementById('membersList');
+document.addEventListener("DOMContentLoaded", () => {
 
-  const API_BASE = 'http://localhost:4001';
+  /* ================== CONFIG ================== */
+  const API = "http://localhost:4001";
+  const projectId = new URLSearchParams(window.location.search).get("id");
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  // Current authenticated user (saved at login)
-  const currentUser = (() => {
-    try {
-      return JSON.parse(localStorage.getItem('user')) || null;
-    } catch (e) { return null; }
-  })();
+  /* ================== ELEMENTS ================== */
+  const title = document.getElementById("projectTitle");
+  const desc = document.getElementById("projectDescription");
+  const tagline = document.getElementById("projectTagline");
+  const founderName = document.getElementById("founderName");
+  const membersList = document.getElementById("membersList");
+  const joinBtn = document.querySelector(".join-btn");
 
-  // Keep the nice button effect
-  if (joinBtn) {
-    joinBtn.addEventListener('click', async () => {
-      if (!currentUser) {
-        alert('Veuillez vous connecter pour demander à rejoindre le projet.');
-        return window.location.href = '../login/login.html';
-      }
+  let project = null;
 
-      joinBtn.disabled = true;
-      joinBtn.textContent = 'Envoi...';
+  /* ================== UI HELPERS ================== */
 
-      try {
-        const id = new URLSearchParams(window.location.search).get('id');
-        const res = await fetch(`${API_BASE}/api/projects/${id}/requestJoin`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: currentUser._id })
-        });
+  const createMemberCard = (member) => {
+    const div = document.createElement("div");
+    div.className = "member-card";
+    div.innerHTML = `
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+      <h4>${member.nom} ${member.prenom}</h4>
+    `;
+    return div;
+  };
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || 'Erreur');
+  const setJoinButtonState = (state) => {
+    const states = {
+      owner: { text: "👑 Organizer", disabled: true },
+      member: { text: "✅ Déjà membre", disabled: true },
+      pending: { text: "⏳ Demande envoyée", disabled: true },
+      join: { text: "🤝 Rejoindre le projet", disabled: false }
+    };
 
-        joinBtn.textContent = 'Demande envoyée ✅';
-        joinBtn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
-      } catch (err) {
-        console.error('Join request failed', err);
-        joinBtn.disabled = false;
-        joinBtn.textContent = 'Demander à rejoindre';
-        alert('Impossible d\'envoyer la demande. Réessayez.');
-      }
-    });
-  }
+    joinBtn.textContent = states[state].text;
+    joinBtn.disabled = states[state].disabled;
+  };
 
-  // Simple helpers
-  const q = (name) => new URLSearchParams(window.location.search).get(name);
-
-  async function fetchJson(url) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Network error: ' + res.status);
-    return res.json();
-  }
-
-  function createMemberCard(member) {
-    const card = document.createElement('div');
-    card.className = 'member-card';
-    const img = document.createElement('img');
-    img.src = '/assets/images/default-avatar.png';
-    img.alt = 'member';
-    const h4 = document.createElement('h4');
-    const p = document.createElement('p');
-
-    if (!member) h4.textContent = 'Inconnu';
-    else if (typeof member === 'string') h4.textContent = member;
-    else h4.textContent = `${member.nom || ''} ${member.prenom || ''}`.trim() || (member._id || 'Membre');
-
-    card.appendChild(img);
-    card.appendChild(h4);
-    card.appendChild(p);
-    return card;
-  }
+  /* ================== LOAD PROJECT ================== */
 
   async function loadProject() {
-    const id = q('id');
-    if (!id) {
-      if (projectTitle) projectTitle.textContent = 'Projet non spécifié';
-      return;
-    }
-
     try {
-      const project = await fetchJson(`${API_BASE}/api/projects/getProject/${id}`);
+      const res = await fetch(`${API}/api/projects/getProject/${projectId}`);
+      project = await res.json();
 
-      if (projectTitle) projectTitle.textContent = project.title || 'Sans titre';
-      if (projectTagline) projectTagline.textContent = project.category ? `Catégorie: ${project.category}` : '';
-      if (projectDescription) projectDescription.textContent = project.description || '';
+      renderProject();
+      renderMembers();
+      handleJoinButton();
 
-      if (project.owner) {
-        const owner = typeof project.owner === 'string' ? { _id: project.owner } : project.owner;
-        if (founderName) founderName.textContent = `${owner.nom || ''} ${owner.prenom || ''}`.trim() || 'Inconnu';
-        if (founderBio) founderBio.textContent = owner.bio || '';
-        if (owner.profileImage && founderImg) founderImg.src = owner.profileImage;
-      } else {
-        if (founderName) founderName.textContent = 'Inconnu';
-      }
-
-      if (membersList) {
-        membersList.innerHTML = '';
-        if (Array.isArray(project.members) && project.members.length) {
-          project.members.forEach((m) => membersList.appendChild(createMemberCard(m)));
-        } else {
-          membersList.innerHTML = '<p>Aucun membre inscrit.</p>';
-        }
-      }
-
-      // Disable/hide join button for owner or existing members
-      if (joinBtn) {
-        // Build identifier candidates from current user (support _id, numeroEtudiant, email)
-        const getUserCandidates = (u) => {
-          if (!u) return [];
-          const cand = [];
-          if (u._id) cand.push(u._id.toString());
-          if (u.numeroEtudiant) cand.push(String(u.numeroEtudiant));
-          if (u.email) cand.push(String(u.email).toLowerCase());
-          return cand.filter(Boolean);
-        };
-
-        const currentCandidates = getUserCandidates(currentUser);
-
-        // Build owner candidates (owner may be populated object or id string)
-        const ownerCandidates = (() => {
-          const o = project.owner;
-          if (!o) return [];
-          if (typeof o === 'string') return [o.toString()];
-          const arr = [];
-          if (o._id) arr.push(o._id.toString());
-          if (o.numeroEtudiant) arr.push(String(o.numeroEtudiant));
-          if (o.email) arr.push(String(o.email).toLowerCase());
-          return arr.filter(Boolean);
-        })();
-
-        const isOwner = currentCandidates.length && ownerCandidates.length && currentCandidates.some(c => ownerCandidates.includes(c));
-
-        // Check members: each member may be id string or populated object
-        const isMember = (() => {
-          if (!currentCandidates.length || !Array.isArray(project.members)) return false;
-          return project.members.some(m => {
-            if (!m) return false;
-            const memberCandidates = [];
-            if (typeof m === 'string') memberCandidates.push(m.toString());
-            else {
-              if (m._id) memberCandidates.push(m._id.toString());
-              if (m.numeroEtudiant) memberCandidates.push(String(m.numeroEtudiant));
-              if (m.email) memberCandidates.push(String(m.email).toLowerCase());
-            }
-            return currentCandidates.some(c => memberCandidates.includes(c));
-          });
-        })();
-
-        // Debug info: helps identify mismatched id formats
-        console.debug('Project load debug:', {
-          currentCandidates,
-          ownerCandidates,
-          projectMembers: Array.isArray(project.members) ? project.members.map(m => {
-            if (!m) return null;
-            if (typeof m === 'string') return m.toString();
-            return {
-              _id: m._id && m._id.toString(),
-              numeroEtudiant: m.numeroEtudiant,
-              email: m.email && String(m.email).toLowerCase()
-            };
-          }) : project.members,
-          isOwner,
-          isMember
-        });
-
-        if (isOwner) {
-          joinBtn.style.display = 'none';
-        } else if (isMember) {
-          joinBtn.textContent = 'Déjà membre';
-          joinBtn.disabled = true;
-          joinBtn.style.background = 'linear-gradient(135deg, #6b7280, #4b5563)';
-        }
-      }
     } catch (err) {
-      console.error('Failed to load project', err);
-      if (projectTitle) projectTitle.textContent = 'Impossible de charger le projet';
-      if (membersList) membersList.innerHTML = '<p>Erreur lors du chargement des membres.</p>';
+      title.textContent = "Erreur de chargement";
+      console.error(err);
     }
   }
 
+  /* ================== RENDER ================== */
+
+  function renderProject() {
+    title.textContent = project.title;
+    desc.textContent = project.description;
+    tagline.textContent = project.category || "";
+
+    if (project.owner) {
+      founderName.textContent =
+        `${project.owner.nom} ${project.owner.prenom}`;
+    }
+  }
+
+  function renderMembers() {
+    membersList.innerHTML = "";
+    project.members.forEach(m =>
+      membersList.appendChild(createMemberCard(m))
+    );
+  }
+
+  /* ================== JOIN LOGIC ================== */
+
+  function handleJoinButton() {
+    if (!user) return setJoinButtonState("join");
+
+    if (user._id === project.owner?._id)
+      return setJoinButtonState("owner");
+
+    if (project.members.some(m => m._id === user._id))
+      return setJoinButtonState("member");
+
+    setJoinButtonState("join");
+  }
+
+  async function joinProject() {
+    if (!user) {
+      alert("Veuillez vous connecter");
+      return location.href = "../login/login.html";
+    }
+
+    setJoinButtonState("pending");
+
+    try {
+      await fetch(`${API}/api/joinRequests`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectId,
+          userId: user._id
+        })
+      });
+
+    } catch (err) {
+      alert("Erreur lors de la demande");
+      setJoinButtonState("join");
+    }
+  }
+
+  /* ================== EVENTS ================== */
+
+  if (joinBtn) joinBtn.addEventListener("click", joinProject);
+
   loadProject();
-
-  // reveal animation: reuse existing selectors if present
-  const elements = document.querySelectorAll('.project-header, .project-description, .founder-section, .members-section, .actions');
-  elements.forEach((el) => el.classList.add('fade-in'));
-  const revealOnScroll = () => {
-    elements.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) el.classList.add('visible');
-    });
-  };
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll();
-
-  // Navbar color on scroll
-  window.addEventListener('scroll', () => {
-    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 30);
-  });
 });

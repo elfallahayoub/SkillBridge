@@ -71,7 +71,7 @@ exports.createProject = async (req, res) => {
     await project.save();
 
     const populatedProject = await Project.findById(project._id)
-      .populate("owner", "nom prenom")
+      .populate("owner", "nom prenom") //Remplace l’ID par l’objet utilisateur
       .populate("members", "nom prenom");
 
     res.status(201).json({
@@ -121,13 +121,15 @@ exports.getProjectById = async (req, res) => {
 /* ================= UPDATE PROJECT ================= */
 exports.updateProject = async (req, res) => {
   try {
-    const { id } = req.params;
-    const updates = { ...req.body };
+    // const { id } = req.params; 
+    const id = req.params.id; 
+
+    const updates = { ...req.body }; ///////////////////////////////////////////////////
 
     if (updates.owner) {
-      const ownerId = await resolveUserIdentifier(updates.owner);
+      const ownerId = await resolveUserIdentifier(updates.owner); /////////////////////////////
       if (!ownerId) {
-        return res.status(400).json({ message: "Invalid owner" });
+        return res.status(400).json({ message: "Invalid owner" }); // 400 not found 
       }
       updates.owner = ownerId;
     }
@@ -139,15 +141,13 @@ exports.updateProject = async (req, res) => {
       for (const m of membersRaw) {
         const id = await resolveUserIdentifier(m);
         if (id) membersIds.push(id);
+
       }
 
       updates.members = membersIds;
     }
 
-    const updatedProject = await Project.findByIdAndUpdate(
-      id,
-      updates,
-      { new: true }
+    const updatedProject = await Project.findByIdAndUpdate(id, updates, { new: true } /////////////////////////
     )
       .populate("owner", "nom prenom")
       .populate("members", "nom prenom");
