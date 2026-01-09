@@ -68,8 +68,10 @@ exports.updateUser = async (req, res) => {
       numeroTele,
       specialite,
       niveau,
-      numeroEtudiant 
-    } = req.body;
+      numeroEtudiant,
+      university,
+      photo
+    } = req.body || {};
 
     const updateData = {
       nom,
@@ -77,13 +79,15 @@ exports.updateUser = async (req, res) => {
       numeroTele,
       specialite,
       niveau,
-      numeroEtudiant
+      numeroEtudiant,
+      university,
+      photo
     };
-
-    // ✅ Si une nouvelle photo est envoyée
     if (req.file) {
-      updateData.photo = '/uploads/photos/1767464325346-photo.jpg';
+      updateData.photo = `/uploads/photos/${req.file.filename}`;
     }
+
+  
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
