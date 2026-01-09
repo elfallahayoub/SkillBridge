@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const upload = require("../middlewares/upload");
-
+const upload = require("../middlewares/uploads");
 // Create user
 router.post("/createUser", userController.createUser);
 
@@ -11,7 +10,14 @@ router.get("/getAllUsers", userController.getAllUsers);
 
 
 
-router.put("/updateUser/:id",upload.single("photo"),userController.updateUser);
+
+router.put(
+  "/updateUser/:id",
+  upload.single("photo"),
+  userController.updateUser
+);
+
+
 // Update user
 
 //router.put("/modifierUser/:id", userController.modifierUser);

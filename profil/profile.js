@@ -1,19 +1,18 @@
 function goToModify() {
-   window.location.href = "../modify/modify.html";
+  window.location.href = "../modify/modify.html";
 }
+
 function createProject() {
   window.location.href = "../create_project/create-project.html";
-  
-
 }
+
 document.addEventListener("DOMContentLoaded", () => {
-<<<<<<< HEAD
-  const user = JSON.parse(localStorage.getItem("user"));
-=======
 // Déclarez-la comme une fonction globale (pas à l'intérieur d'un autre bloc)
 
 
->>>>>>> main
+
+
+  const user = JSON.parse(localStorage.getItem("user")); 
 
   if (!user) {
     return window.location.href = "../login/login.html";
@@ -21,43 +20,61 @@ document.addEventListener("DOMContentLoaded", () => {
 <<<<<<< HEAD
 =======
 
->>>>>>> main
 
-  // ===== Infos utilisateur =====
+
+  // Inject user data into profile
   document.getElementById("username").textContent =
-    `${user.nom} ${user.prenom || ""}`;
+    `${user.prenom} ${user.nom}`;
 
-  document.getElementById("userEmail").textContent = user.email;
-  document.getElementById("emailValue").textContent = user.email;
+  document.getElementById("email").textContent =
+    user.email;
+
   document.getElementById("fullname").textContent =
-    `${user.nom} ${user.prenom || ""}`;
+    `${user.nom} ${user.prenom}`;
 
-  document.getElementById("specialite").textContent =
-    user.specialite || "—";
+  document.getElementById("university").textContent =
+    user.university || "ESISA";
 
   document.getElementById("numEtudiant").textContent =
-    user.numeroEtudiant || "—";
+    user.numeroEtudiant || "*****";
 
   document.getElementById("level").textContent =
-    user.niveau || "—";
+    user.niveau || "level";
 
-  if (user.photo) {
-    document.getElementById("profilePhoto").src = user.photo;
-  }
+  document.getElementById("specialite").textContent = 
+    user.specialite || "vide";
+  
+  const profilePic = document.querySelector(".profile-pic");
 
-  // ===== Bouton créer projet =====
-  document.getElementById("createProjectBtn")
-    .addEventListener("click", () => {
-      window.location.href = "../create_project/create-project.html";
+  profilePic.src = user.photo
+    ? "http://localhost:4001" + user.photo
+    : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+
+
+
+
+  const elements = document.querySelectorAll(".fade-in");
+
+  const showOnScroll = () => {
+    elements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        el.classList.add("visible");
+      }
     });
+  };
 
-  // ===== Projets (à charger depuis API plus tard) =====
-  const projectsGrid = document.getElementById("projectsGrid");
+  window.addEventListener("scroll", showOnScroll);
+  showOnScroll();
 
-  projectsGrid.innerHTML = `
-    <div class="project-card">
-      <h3>—</h3>
-      <p>Aucun projet pour le moment</p>
-    </div>
-  `;
+
+/* 
+  window.editProfile = () => {
+    alert("Fonctionnalité à venir : modification du profil !");
+  }; */
+
+  window.openProject = () => {
+    window.location.href = "../project-details/project-details.html";
+  };
+
 });

@@ -6,10 +6,7 @@ const storage = multer.diskStorage({
     cb(null, "uploads/photos");
   },
   filename: (req, file, cb) => {
-    cb(
-      null,
-      `${Date.now()}-${file.fieldname}${path.extname(file.originalname)}`
-    );
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 
@@ -18,7 +15,7 @@ const upload = multer({
   limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
   fileFilter: (req, file, cb) => {
     if (!file.mimetype.startsWith("image/")) {
-      cb(new Error("Seulement images"));
+      return cb(new Error("Only images"));
     }
     cb(null, true);
   }

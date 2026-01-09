@@ -12,9 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const numeroTele = document.getElementById("numeroTele");
   const specialite = document.getElementById("specialite");
   const niveau = document.getElementById("niveau");
-
   const photoInput = document.getElementById("photo");
   const photoPreview = document.getElementById("photoPreview");
+  const university = document.getElementById("university");
+
 
   // Pré-remplissage
   nom.value = user.nom || "";
@@ -24,7 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
   numeroTele.value = user.numeroTele || "";
   specialite.value = user.specialite || "";
   niveau.value = user.niveau || "";
-  if (user.photo) photoPreview.src = user.photo? `http://localhost:4001${user.photo}`: photoPreview.src;
+  university.value = user.university || "ESISA";
+  if (user.photo) {
+  photoPreview.src = `http://localhost:4001${user.photo}`;
+}
+
 
   // Preview image
   photoInput.addEventListener("change", () => {
@@ -55,10 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
   formData.append("numeroTele", numeroTele.value);
   formData.append("specialite", specialite.value);
   formData.append("niveau", niveau.value);
+  formData.append("university", university.value);
+  formData.append("photo", photoPreview.src);
 
-  if (photoInput.files[0]) {
-    formData.append("photo", photoInput.files[0]);
-  }
+  
 
   const res = await fetch(
     `http://localhost:4001/api/users/updateUser/${user._id}`,
