@@ -49,12 +49,16 @@ document.addEventListener("DOMContentLoaded", () => {
   if (numEtuEl)
     numEtuEl.textContent = user.numeroEtudiant || "—";
 
-  // PHOTO
-  const profilePic = document.getElementById("profilePhoto");
+// PHOTO
+const profilePic = document.getElementById("profilePhoto");
 
-if (user.photo) {
-  photoPreview.src = `http://localhost:4001${user.photo}`;
+if (user.photo && user.photo.startsWith("/uploads/")) {
+  profilePic.src = "http://localhost:4001" + user.photo;
+} else {
+  profilePic.src =
+    "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 }
+
 
 
 

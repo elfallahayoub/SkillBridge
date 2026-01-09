@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.onload = () => {
       photoPreview.src = reader.result;
     };
-    reader.readAsDataURL(file);
+    photoPreview.src = URL.createObjectURL(file);
+
   });
 
   // Submit avec FormData
